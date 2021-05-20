@@ -2,8 +2,7 @@
   <div class="login-wrapper">
     <!-- 24列响应式布局 -->
     <ElRow class="login-row">
-      <ElCol :xs="0" :sm="7" :md="7" :lg="8" :xl="9"></ElCol>
-      <ElCol :xs="24" :sm="10" :md="10" :lg="8" :xl="6">
+      <ElCol :xs="24" :sm="10" :md="10" :lg="8" :xl="5">
         <!-- 登录选项卡 -->
         <div class="login-body">
           <!-- 头像 -->
@@ -18,21 +17,40 @@
             class="login-body__form"
           >
             <ElFormItem prop="username">
-              <ElInput v-model="form.username" placeholder="用户名">
+              <ElInput
+                v-model="form.username"
+                placeholder="用户名"
+                @keyup.enter="login"
+              >
                 <template #prefix>
                   <i class="el-input__icon el-icon-user"></i>
                 </template>
               </ElInput>
             </ElFormItem>
+
             <ElFormItem prop="password">
-              <ElInput v-model="form.password" placeholder="密码" show-password>
+              <ElInput
+                v-model="form.password"
+                placeholder="密码"
+                show-password
+                @keyup.enter="login"
+              >
                 <template #prefix>
                   <i class="el-input__icon el-icon-lock"></i>
                 </template>
               </ElInput>
             </ElFormItem>
+
             <ElFormItem class="login-body__btn">
-              <ElButton type="primary" plain @click="login">登录</ElButton>
+              <ElButton type="primary" plain @click="login">
+                <span :class="{ 'hidden-word': loading }">登录</span>
+                <!-- loading icon -->
+                <img
+                  v-show="loading"
+                  class="login-body__loading"
+                  src="@/assets/img/loading.svg"
+                />
+              </ElButton>
               <ElButton type="info" plain @click="resetForm">重置</ElButton>
             </ElFormItem>
           </ElForm>
@@ -40,13 +58,12 @@
         </div>
         <!-- 登录选项卡结束 -->
       </ElCol>
-      <ElCol :xs="0" :sm="7" :md="7" :lg="8" :xl="9"></ElCol>
     </ElRow>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRef, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import {
   ElRow,
   ElCol,
@@ -55,40 +72,16 @@ import {
   ElInput,
   ElButton,
 } from 'element-plus';
+import { useRoute } from 'vue-router';
+import loginLogic from './LoginLogic';
 
-const state = reactive({
-  // 表单绑定数据
-  form: {
-    username: '',
-    password: '',
-  },
-  // 表单验证规则
-  rules: {
-    username: [
-      { required: true, message: '请输入用户名', trigger: 'blur' },
-      { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' },
-    ],
-    password: [
-      { required: true, message: '请输入密码', trigger: 'blur' },
-      { min: 1, max: 99, message: '长度在 1 到 99 个字符', trigger: 'blur' },
-    ],
-  },
-});
-// 表单对象
-const loginForm = ref<typeof ElForm>();
+const router = useRoute();
+
+// 登录逻辑
+const { state, loginForm, login, resetForm } = loginLogic();
+
 // 解构 state
-const { form, rules } = toRefs(state);
-
-// 登录
-const login = () => {
-  loginForm.value?.validate((data: boolean) => {
-    console.log(data);
-  });
-};
-// 重置表单
-const resetForm = () => {
-  loginForm.value?.resetFields();
-};
+const { form, rules, loading } = toRefs(state);
 </script>
 
 <style scoped lang="scss">
@@ -97,6 +90,7 @@ const resetForm = () => {
   height: 100%;
 }
 .login-row {
+  justify-content: center;
   position: relative;
   top: 50%;
   left: 50%;
@@ -125,8 +119,18 @@ const resetForm = () => {
     padding: 0 20px;
   }
   &__btn {
+    position: relative;
     display: flex;
     justify-content: flex-end;
   }
+  &__loading {
+    position: absolute;
+    left: 10%;
+    top: 0;
+    transition: all 0.3s;
+  }
+}
+.hidden-word {
+  visibility: hidden;
 }
 </style>
