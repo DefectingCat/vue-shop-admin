@@ -18,9 +18,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'Home',
+    redirect: '/welcome',
     meta: {
       title: '首页',
     },
+    children: [
+      {
+        path: '/welcome',
+        name: 'Welcome',
+        component: () =>
+          import(
+            /* webpackChunkName: "Welcome" */ '@/components/Home/HomeWelcome.vue'
+          ),
+      },
+      {
+        path: '/users',
+        name: 'Users',
+        component: () =>
+          import(/* webpackChunkName: "User" */ '@/views/Home/User/User.vue'),
+      },
+    ],
     component: () =>
       import(/* webpackChunkName: "Home" */ '@/views/Home/Home.vue'),
   },
@@ -33,11 +50,19 @@ const router = createRouter({
 
 // 全局导航守卫，检查是否已经登录
 router.beforeEach((to) => {
-  // 去往 login 页面不检查
-  if (to.path === '/login') return true;
-
   // 检查是否有 token
   const token = sessionStorage.getItem('token');
+  // 去往 login 检查是否已经登录
+  if (token && to.path === '/login') {
+    ElMessage({
+      showClose: true,
+      message: '已经登录！',
+      type: 'warning',
+    });
+
+    return '/home';
+  }
+  if (!token && to.path === '/login') return true;
   if (token) return true;
 
   // 否则回到 login 页面
