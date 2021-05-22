@@ -1,11 +1,13 @@
 <template>
   <ElContainer>
     <ElHeader>
+      <!-- header child component -->
       <HomeHeader @fold-menu="foldMenu" :isCollapse="isCollapse" />
     </ElHeader>
 
     <ElContainer>
       <ElAside :width="isCollapse ? '64px' : '270px'">
+        <!-- side child component -->
         <HomeSide :state="state" />
       </ElAside>
 

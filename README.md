@@ -1,4 +1,4 @@
-# vue_shop
+# 基于 Vue3 + TS 后台管理系统
 
 ## Project setup
 ```
