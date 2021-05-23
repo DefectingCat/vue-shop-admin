@@ -1,7 +1,8 @@
 import axios from 'axios';
 const request = axios.create({
   // baseURL: 'http://127.0.0.1:8888/api/private/v1/',
-  baseURL: 'https://www.liulongbin.top:8888/api/private/v1/',
+  baseURL: 'http://timemeetyou.com:8889/api/private/v1/',
+  // baseURL: 'https://www.liulongbin.top:8888/api/private/v1/',
   timeout: 5000,
 });
 // 响应拦截器

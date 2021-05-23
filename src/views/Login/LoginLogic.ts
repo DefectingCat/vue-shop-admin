@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue';
 import { ElForm, ElMessage } from 'element-plus';
 import request from '@/hook/network/request';
 import { useRouter } from 'vue-router';
+import { formRules } from '@/types/formRules';
 
 // 登录请求返回的数据
 type result = {
@@ -22,38 +23,8 @@ type loginLogic = {
       password: string;
     };
     rules: {
-      username: (
-        | {
-            required: boolean;
-            message: string;
-            trigger: string;
-            min?: undefined;
-            max?: undefined;
-          }
-        | {
-            min: number;
-            max: number;
-            message: string;
-            trigger: string;
-            required?: undefined;
-          }
-      )[];
-      password: (
-        | {
-            required: boolean;
-            message: string;
-            trigger: string;
-            min?: undefined;
-            max?: undefined;
-          }
-        | {
-            min: number;
-            max: number;
-            message: string;
-            trigger: string;
-            required?: undefined;
-          }
-      )[];
+      username: formRules[];
+      password: formRules[];
     };
     loading: boolean;
   };
@@ -128,6 +99,7 @@ const loginLogic = (): loginLogic => {
 
   // 登录
   const login = () => {
+    if (state.loading) return;
     loginForm.value?.validate(async (validate: boolean) => {
       // 表单验证
       if (validate) {

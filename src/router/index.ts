@@ -74,6 +74,7 @@ router.beforeEach((to) => {
   return '/login';
 });
 
+// 修改标题
 router.afterEach((to) => {
   const title = to.meta?.title as string;
   title ? (document.title = title) : void 0;
