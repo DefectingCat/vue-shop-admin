@@ -1,3 +1,4 @@
+import { CheckPhone } from '@/hook/common/formValidate';
 // 表单验证类型
 export type formRules =
   | {
@@ -13,4 +14,8 @@ export type formRules =
       message: string;
       trigger: string;
       required?: undefined;
+    }
+  | {
+      validator: CheckPhone;
+      trigger: string;
     };

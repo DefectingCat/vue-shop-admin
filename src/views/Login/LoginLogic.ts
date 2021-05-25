@@ -3,18 +3,7 @@ import { ElForm, ElMessage } from 'element-plus';
 import request from '@/hook/network/request';
 import { useRouter } from 'vue-router';
 import { formRules } from '@/types/formRules';
-
-// 登录请求返回的数据
-type result = {
-  data: {
-    token: string;
-  };
-  meta: {
-    msg: string;
-    status: number;
-  };
-  [key: string]: unknown;
-};
+import { Result } from '@/types/requestType';
 
 type loginLogic = {
   state: {
@@ -62,7 +51,7 @@ const loginLogic = (): loginLogic => {
 
   // 登录时请求方法
   const loginRequest = async () => {
-    const result: result = await request({
+    const result: Result = await request({
       method: 'POST',
       url: 'login',
       data: state.form,
@@ -94,6 +83,13 @@ const loginLogic = (): loginLogic => {
           type: 'error',
         });
         break;
+      case '无效token':
+        ElMessage({
+          showClose: true,
+          message: '无效token',
+          type: 'error',
+        });
+        break;
     }
   };
 
@@ -109,11 +105,7 @@ const loginLogic = (): loginLogic => {
           await loginRequest();
         } catch (e) {
           console.error(e);
-          ElMessage({
-            showClose: true,
-            message: '请求失败',
-            type: 'error',
-          });
+          ElMessage.error('请求发送失败');
         } finally {
           state.loading = false;
         }

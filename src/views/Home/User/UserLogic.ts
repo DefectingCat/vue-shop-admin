@@ -1,7 +1,7 @@
-import { reactive, ref } from '@vue/reactivity';
+import { reactive } from '@vue/reactivity';
 import userRequest from './UserRequest';
-import { ElForm, ElMessage } from 'element-plus';
 import { formRules } from '@/types/formRules';
+import { checkPhone, checkEmail } from '@/hook/common/formValidate';
 
 export type State = {
   // 查询参数
@@ -27,12 +27,14 @@ export type State = {
   totalUsers: number;
   // dialog 控制
   dialogVisible: boolean;
+  // 加载按钮状态
+  loading: boolean;
   // 添加用户表单
   addUserForm: {
-    username: string;
-    password: string;
-    email: string;
-    mobile: string;
+    username?: string;
+    password?: string;
+    email?: string;
+    mobile?: string;
   };
   // 添加用户表单验证
   addUserRules: {
@@ -41,11 +43,21 @@ export type State = {
     email: formRules[];
     mobile: formRules[];
   };
+  // 编辑用户 dialog 控制
+  editVisible: boolean;
+  // 编辑用户表单
+  editUserForm: {
+    username?: string;
+    password?: string;
+    email?: string;
+    mobile?: string;
+  };
+  // 修改用户时的 id
+  editUserId: number;
 };
 
 type UserLogic = {
   state: State;
-  userForm: unknown;
   handleSizeChange: (val: number) => void;
   handleCurrentChange: (val: number) => void;
 };
@@ -64,6 +76,8 @@ const userLogic = (): UserLogic => {
     totalUsers: 0,
     // dialog 控制
     dialogVisible: false,
+    // 加载按钮状态
+    loading: false,
     // 添加用户表单
     addUserForm: {
       username: '',
@@ -81,19 +95,20 @@ const userLogic = (): UserLogic => {
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' },
       ],
-      email: [
-        { required: true, message: '请输入电子邮箱', trigger: 'blur' },
-        { min: 3, max: 40, message: '长度在 3 到 40 个字符', trigger: 'blur' },
-      ],
-      mobile: [
-        { required: true, message: '请输入手机号码', trigger: 'blur' },
-        { min: 11, max: 11, message: '长度在 11 个字符', trigger: 'blur' },
-      ],
+      email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
+      mobile: [{ required: true, validator: checkPhone, trigger: 'blur' }],
     },
+    // 编辑用户 dialog 控制
+    editVisible: false,
+    // 编辑用户表单
+    editUserForm: {
+      username: '',
+      email: '',
+      mobile: '',
+    },
+    // 修改用户时的 id
+    editUserId: 0,
   });
-
-  // 添加表单对象
-  const userForm = ref<typeof ElForm>();
 
   // 请求方法
   const { getUsers } = userRequest(state);
@@ -114,7 +129,6 @@ const userLogic = (): UserLogic => {
 
   return {
     state,
-    userForm,
     handleSizeChange,
     handleCurrentChange,
   };

@@ -8,7 +8,7 @@
     >
       <use xlink:href="#xfy-zhankai"></use>
     </svg>
-    <span>后台管理系统</span>
+    <span class="head-left__title" @click="goHome">后台管理系统</span>
   </div>
 
   <div class="head-right">
@@ -21,10 +21,9 @@ import { defineEmit, defineProps } from '@vue/runtime-core';
 import { ElButton, ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 
-const props =
-  defineProps<{
-    isCollapse: boolean;
-  }>();
+defineProps<{
+  isCollapse: boolean;
+}>();
 const emit = defineEmit(['fold-menu']);
 
 const router = useRouter();
@@ -44,6 +43,11 @@ const logout = () => {
 const foldMenu = () => {
   emit('fold-menu');
 };
+
+// 单击标题返回首页 welcome
+const goHome = () => {
+  router.push('welcome');
+};
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +62,10 @@ const foldMenu = () => {
   }
   .trans-icon {
     transform: rotateZ(180deg);
+  }
+  &__title {
+    user-select: none;
+    cursor: pointer;
   }
 }
 .head-right {

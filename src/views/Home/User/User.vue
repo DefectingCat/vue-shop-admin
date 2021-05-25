@@ -30,10 +30,10 @@
     <!-- 表格 -->
     <ElTable :data="userList" stripe>
       <ElTableColumn type="index"></ElTableColumn>
-      <ElTableColumn label="姓名" prop="username"></ElTableColumn>
-      <ElTableColumn label="电话" prop="mobile"></ElTableColumn>
-      <ElTableColumn label="角色" prop="role_name"></ElTableColumn>
-      <ElTableColumn label="状态">
+      <ElTableColumn label="姓名" prop="username" width="180"></ElTableColumn>
+      <ElTableColumn label="电话" prop="mobile" width="180"></ElTableColumn>
+      <ElTableColumn label="角色" prop="role_name" width="180"></ElTableColumn>
+      <ElTableColumn label="状态" width="80">
         <!--
           通过 scoped slot 拿到子组件的状态
           也就是每一行的状态
@@ -45,7 +45,20 @@
           ></ElSwitch>
         </template>
       </ElTableColumn>
-      <ElTableColumn label="操作"></ElTableColumn>
+      <ElTableColumn label="操作">
+        <template #default="scope">
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="editUser(scope.row)"
+          ></el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            icon="el-icon-delete"
+          ></el-button>
+        </template>
+      </ElTableColumn>
     </ElTable>
 
     <!-- 分页 -->
@@ -60,37 +73,26 @@
     />
   </ElCard>
 
-  <ElDialog title="添加用户" v-model="dialogVisible" width="30%">
-    <!-- 主体区域 -->
-    <ElForm
-      :model="addUserForm"
-      ref="userForm"
-      label-width="66px"
-      :rules="addUserRules"
-    >
-      <ElFormItem prop="username" label="用户名">
-        <ElInput v-model="addUserForm.username" placeholder="用户名"></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="password" label="密码" show-password>
-        <ElInput v-model="addUserForm.password" placeholder="密码"></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="email" label="邮箱">
-        <ElInput v-model="addUserForm.email" placeholder="邮箱"></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="mobile" label="手机">
-        <ElInput v-model="addUserForm.mobile" placeholder="手机"></ElInput>
-      </ElFormItem>
-    </ElForm>
-    <!-- footer -->
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">
-          确 定
-        </el-button>
-      </span>
-    </template>
-  </ElDialog>
+  <UserDialog
+    title="添加用户"
+    v-model:form="addUserForm"
+    v-model:visible="dialogVisible"
+    :rules="addUserRules"
+    :loading="loading"
+    @btnClick="addUserRequset"
+    ref="formRef"
+  />
+
+  <UserDialog
+    title="编辑用户"
+    v-model:form="editUserForm"
+    v-model:visible="editVisible"
+    :rules="addUserRules"
+    :loading="loading"
+    @btnClick="editUserRequest"
+    ref="editFormRef"
+    :editForm="true"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -107,26 +109,37 @@ import {
   ElTableColumn,
   ElSwitch,
   ElPagination,
-  ElDialog,
-  ElForm,
-  ElFormItem,
 } from 'element-plus';
+// 编辑用户表单
+import UserDialog from '@/components/common/UserDialog.vue';
 import userLogic from './UserLogic';
 import modifyUser from './UserModify';
 
 // 表单主体逻辑
-const { state, userForm, handleSizeChange, handleCurrentChange } = userLogic();
+const { state, handleSizeChange, handleCurrentChange } = userLogic();
 const {
   queryInfo,
   userList,
   totalUsers,
   dialogVisible,
+  loading,
   addUserForm,
   addUserRules,
+  editVisible,
+  editUserForm,
 } = toRefs(state);
 
 // 操作用户逻辑
-const { changeUserState, searchUser, addUser } = modifyUser(state);
+const {
+  changeUserState,
+  searchUser,
+  addUser,
+  formRef,
+  editFormRef,
+  addUserRequset,
+  editUser,
+  editUserRequest,
+} = modifyUser(state);
 </script>
 
 <style scoped lang="scss">

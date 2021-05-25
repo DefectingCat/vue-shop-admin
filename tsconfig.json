@@ -11,6 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    // https://github.com/johnsoncodehk/volar/issues/47
+    "noUnusedLocals": true,
     "types": [
       "webpack-env"
     ],

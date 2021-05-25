@@ -26,15 +26,7 @@
     </ElFormItem>
 
     <ElFormItem class="login-body__btn">
-      <ElButton type="primary" plain @click="login">
-        <span :class="{ 'hidden-word': loading }">登录</span>
-        <!-- loading icon -->
-        <img
-          v-show="loading"
-          class="login-body__loading"
-          src="@/assets/img/loading.svg"
-        />
-      </ElButton>
+      <LoadingBtn :loading="loading" msg="登录" @btnClick="login" />
       <ElButton type="info" plain @click="resetForm">重置</ElButton>
     </ElFormItem>
   </ElForm>
@@ -45,6 +37,8 @@ import { toRefs } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 // logical
 import loginLogic from '@/views/Login/LoginLogic';
+// 登录加载按钮
+import LoadingBtn from '@/components/common/LoadingBtn.vue';
 
 // 登录逻辑
 const { state, loginForm, login, resetForm } = loginLogic();
@@ -73,15 +67,8 @@ const { form, rules, loading } = toRefs(state);
     padding: 0 20px;
   }
   &__btn {
-    position: relative;
     display: flex;
     justify-content: flex-end;
-  }
-  &__loading {
-    position: absolute;
-    left: 10%;
-    top: 0;
-    transition: all 0.3s;
   }
 }
 .hidden-word {

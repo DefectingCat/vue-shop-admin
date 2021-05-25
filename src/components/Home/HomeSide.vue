@@ -27,22 +27,7 @@
 <script lang="ts" setup>
 import { defineProps, toRefs } from '@vue/runtime-core';
 import { ElMenu, ElSubmenu, ElMenuItem, ElMenuItemGroup } from 'element-plus';
-type State = {
-  menus: {
-    id: number;
-    authName: string;
-    path: string;
-    children: {
-      id: number;
-      authName: string;
-      path: string;
-      order: string;
-    }[];
-    order: string;
-  }[];
-  icons: Record<string, string>;
-  isCollapse: boolean;
-};
+import type { State } from '@/views/Home/HomeLogic';
 
 const props =
   defineProps<{

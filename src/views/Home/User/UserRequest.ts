@@ -1,34 +1,96 @@
 import { State } from './UserLogic';
 import request from '@/hook/network/request';
+import { ElMessage } from 'element-plus';
+import { Result } from '@/types/requestType';
 
 type UserRequest = {
   getUsers: () => Promise<void>;
   changeState: (userInfo: State['userList'][1]) => Promise<void>;
+  postUser: (userInfo: State['addUserForm']) => Promise<Result>;
+  editUserReq: (
+    userInfo: State['editUserForm'],
+    userId: number
+  ) => Promise<Result>;
+};
+
+// 请求发送失败时返回的对象
+const failResult = {
+  data: {
+    token: '1',
+  },
+  meta: {
+    msg: '请求发送失败',
+    status: 400,
+  },
 };
 
 const userRequest = (state: State): UserRequest => {
   // 请求用户数据
   const getUsers = async () => {
-    const { data: res } = await request({
-      method: 'GET',
-      url: 'users',
-      params: state.queryInfo,
-    });
-    state.userList = res.users; // 保存用户列表
-    state.totalUsers = res.total; // 所有用户数量
+    try {
+      const { data: res } = await request({
+        method: 'GET',
+        url: 'users',
+        params: state.queryInfo,
+      });
+      state.userList = res.users; // 保存用户列表
+      state.totalUsers = res.total; // 所有用户数量
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+    }
   };
 
   // 修改用户状态
   const changeState = async (userInfo: State['userList'][1]) => {
-    const res = await request({
+    await request({
       method: 'PUT',
       url: `users/${userInfo.id}/state/${userInfo.mg_state}`,
     });
   };
 
+  // 添加用户
+  const postUser = async (userInfo: State['addUserForm']) => {
+    try {
+      // 发送请求
+      const result: Result = await request({
+        method: 'POST',
+        url: 'users',
+        data: userInfo,
+      });
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      // 发送失败时返回类似接口的值
+      return failResult;
+    }
+  };
+
+  // 编辑用户
+  const editUserReq = async (
+    userInfo: State['editUserForm'],
+    userId: number
+  ) => {
+    try {
+      const result: Result = await request.put(`users/${userId}`, {
+        email: userInfo.email,
+        mobile: userInfo.mobile,
+      });
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      // 发送失败时返回类似接口的值
+      return failResult;
+    }
+  };
+
   return {
     getUsers,
     changeState,
+    postUser,
+    editUserReq,
   };
 };
 

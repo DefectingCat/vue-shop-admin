@@ -35,7 +35,7 @@ const homeLogic = (): HomeLogic => {
       '145': '#xfy-shuju',
     },
     // 是否折叠
-    isCollapse: false,
+    isCollapse: true,
   });
 
   // 折叠菜单
