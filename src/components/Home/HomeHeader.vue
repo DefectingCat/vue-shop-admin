@@ -4,7 +4,7 @@
       class="icon head-icon"
       :class="{ 'trans-icon': !isCollapse }"
       aria-hidden="true"
-      @click="foldMenu"
+      @click="emit('fold-menu')"
     >
       <use xlink:href="#xfy-zhankai"></use>
     </svg>
@@ -37,11 +37,6 @@ const logout = () => {
     type: 'success',
   });
   router.push('login');
-};
-
-// 通知父组件折叠菜单
-const foldMenu = () => {
-  emit('fold-menu');
 };
 
 // 单击标题返回首页 welcome

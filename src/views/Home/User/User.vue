@@ -1,65 +1,22 @@
 <template>
-  <ElBreadcrumb separator-class="el-icon-arrow-right">
-    <ElBreadcrumbItem :to="{ path: '/home' }">首页</ElBreadcrumbItem>
-    <ElBreadcrumbItem>用户管理</ElBreadcrumbItem>
-    <ElBreadcrumbItem>用户列表</ElBreadcrumbItem>
-  </ElBreadcrumb>
+  <!-- 面包屑导航 -->
+  <UserHader />
 
   <ElCard>
     <!-- 搜索 -->
-    <ElRow :gutter="20">
-      <ElCol :span="6">
-        <ElInput
-          placeholder="键入用户名以搜索"
-          prefix-icon="el-icon-search"
-          v-model="queryInfo.query"
-          clearable
-          @keyup.enter="searchUser"
-          @clear="searchUser"
-        >
-          <template #append>
-            <ElButton icon="el-icon-search" @click="searchUser"></ElButton>
-          </template>
-        </ElInput>
-      </ElCol>
-      <ElCol :span="4">
-        <ElButton type="primary" plain @click="addUser">添加用户</ElButton>
-      </ElCol>
-    </ElRow>
+    <UserSearch
+      :queryInfo="queryInfo"
+      @searchUser="searchUser"
+      @addUser="addUser"
+    />
 
     <!-- 表格 -->
-    <ElTable :data="userList" stripe>
-      <ElTableColumn type="index"></ElTableColumn>
-      <ElTableColumn label="姓名" prop="username" width="180"></ElTableColumn>
-      <ElTableColumn label="电话" prop="mobile" width="180"></ElTableColumn>
-      <ElTableColumn label="角色" prop="role_name" width="180"></ElTableColumn>
-      <ElTableColumn label="状态" width="80">
-        <!--
-          通过 scoped slot 拿到子组件的状态
-          也就是每一行的状态
-        -->
-        <template #default="scope">
-          <ElSwitch
-            v-model="scope.row.mg_state"
-            @change="changeUserState(scope.row)"
-          ></ElSwitch>
-        </template>
-      </ElTableColumn>
-      <ElTableColumn label="操作">
-        <template #default="scope">
-          <el-button
-            size="mini"
-            icon="el-icon-edit"
-            @click="editUser(scope.row)"
-          ></el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            icon="el-icon-delete"
-          ></el-button>
-        </template>
-      </ElTableColumn>
-    </ElTable>
+    <UserTable
+      :userList="userList"
+      @changeUserState="changeUserState"
+      @editUser="editUser"
+      @deleteUser="deleteUser"
+    />
 
     <!-- 分页 -->
     <ElPagination
@@ -73,6 +30,7 @@
     />
   </ElCard>
 
+  <!-- 添加用户表单 -->
   <UserDialog
     title="添加用户"
     v-model:form="addUserForm"
@@ -83,6 +41,7 @@
     ref="formRef"
   />
 
+  <!-- 编辑用户表单 -->
   <UserDialog
     title="编辑用户"
     v-model:form="editUserForm"
@@ -97,23 +56,19 @@
 
 <script lang="ts" setup>
 import { toRefs } from '@vue/reactivity';
-import {
-  ElBreadcrumb,
-  ElBreadcrumbItem,
-  ElCard,
-  ElInput,
-  ElButton,
-  ElRow,
-  ElCol,
-  ElTable,
-  ElTableColumn,
-  ElSwitch,
-  ElPagination,
-} from 'element-plus';
-// 编辑用户表单
+import { ElCard, ElPagination } from 'element-plus';
+// 通用组件
 import UserDialog from '@/components/common/UserDialog.vue';
+// 子组件
+import UserHader from '@/components/Home/User/UserHeader.vue';
+import UserSearch from '@/components/Home/User/UserSearch.vue';
+import UserTable from '@/components/Home/User/UserTable.vue';
+// 用户逻辑
 import userLogic from './UserLogic';
-import modifyUser from './UserModify';
+import modifyUser from './modifyUser';
+import toAddUser from './addUser';
+import toEditUser from './editUser';
+import toDeleteUser from './deleteUser';
 
 // 表单主体逻辑
 const { state, handleSizeChange, handleCurrentChange } = userLogic();
@@ -130,16 +85,13 @@ const {
 } = toRefs(state);
 
 // 操作用户逻辑
-const {
-  changeUserState,
-  searchUser,
-  addUser,
-  formRef,
-  editFormRef,
-  addUserRequset,
-  editUser,
-  editUserRequest,
-} = modifyUser(state);
+const { changeUserState, searchUser } = modifyUser(state);
+// 添加用户
+const { addUser, formRef, addUserRequset } = toAddUser(state);
+// 编辑用户
+const { editFormRef, editUser, editUserRequest } = toEditUser(state);
+// 删除用户
+const { deleteUser } = toDeleteUser(state);
 </script>
 
 <style scoped lang="scss">

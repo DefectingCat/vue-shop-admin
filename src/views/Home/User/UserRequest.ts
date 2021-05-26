@@ -11,6 +11,7 @@ type UserRequest = {
     userInfo: State['editUserForm'],
     userId: number
   ) => Promise<Result>;
+  deleteUserRequest: (userId: number) => Promise<Result>;
 };
 
 // 请求发送失败时返回的对象
@@ -86,11 +87,25 @@ const userRequest = (state: State): UserRequest => {
     }
   };
 
+  // 删除用户
+  const deleteUserRequest = async (userId: number) => {
+    try {
+      const result: Result = await request.delete(`users/${userId}`);
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      // 发送失败时返回类似接口的值
+      return failResult;
+    }
+  };
+
   return {
     getUsers,
     changeState,
     postUser,
     editUserReq,
+    deleteUserRequest,
   };
 };
 

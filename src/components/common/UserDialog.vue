@@ -7,20 +7,30 @@
   >
     <!-- 主体区域 -->
     <ElForm ref="formRef" :model="userForm" label-width="66px" :rules="rules">
-      <ElFormItem prop="username" label="用户名">
+      <ElFormItem
+        prop="username"
+        label="用户名"
+        @keyup.enter="emit('btnClick')"
+      >
         <ElInput
           v-model="userForm.username"
           placeholder="用户名"
           :disabled="editForm"
         ></ElInput>
       </ElFormItem>
-      <ElFormItem prop="password" label="密码" show-password v-if="!editForm">
+      <ElFormItem
+        prop="password"
+        label="密码"
+        show-password
+        v-if="!editForm"
+        @keyup.enter="emit('btnClick')"
+      >
         <ElInput v-model="userForm.password" placeholder="密码"></ElInput>
       </ElFormItem>
-      <ElFormItem prop="email" label="邮箱">
+      <ElFormItem prop="email" label="邮箱" @keyup.enter="emit('btnClick')">
         <ElInput v-model="userForm.email" placeholder="邮箱"></ElInput>
       </ElFormItem>
-      <ElFormItem prop="mobile" label="手机">
+      <ElFormItem prop="mobile" label="手机" @keyup.enter="emit('btnClick')">
         <ElInput v-model="userForm.mobile" placeholder="手机"></ElInput>
       </ElFormItem>
     </ElForm>
@@ -28,7 +38,11 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisiable = false">取消</el-button>
-        <LoadingBtn msg="确定" :loading="loading" @btn-click="btnClick" />
+        <LoadingBtn
+          msg="确定"
+          :loading="loading"
+          @btn-click="emit('btnClick')"
+        />
       </span>
     </template>
   </ElDialog>
@@ -125,18 +139,13 @@ export default defineComponent({
       },
     });
 
-    // 确定按钮点击事件
-    const btnClick = () => {
-      emit('btnClick');
-    };
-
     // 表单 ref
     const formRef = ref();
 
     return {
+      emit,
       userForm,
       dialogVisiable,
-      btnClick,
       formRef,
     };
   },
