@@ -1,6 +1,9 @@
 <template>
   <!-- 面包屑导航 -->
-  <UserHader />
+  <Breadcrumb>
+    <template #l1> 用户管理 </template>
+    <template #l2> 用户列表 </template>
+  </Breadcrumb>
 
   <ElCard>
     <!-- 搜索 -->
@@ -59,8 +62,8 @@ import { toRefs } from '@vue/reactivity';
 import { ElCard, ElPagination } from 'element-plus';
 // 通用组件
 import UserDialog from '@/components/common/UserDialog.vue';
+import Breadcrumb from '@/components/common/Breadcrumb.vue';
 // 子组件
-import UserHader from '@/components/Home/User/UserHeader.vue';
 import UserSearch from '@/components/Home/User/UserSearch.vue';
 import UserTable from '@/components/Home/User/UserTable.vue';
 // 用户逻辑
@@ -95,10 +98,6 @@ const { deleteUser } = toDeleteUser(state);
 </script>
 
 <style scoped lang="scss">
-.el-card {
-  margin-top: 14px;
-  border-radius: 10px;
-}
 .el-table,
 .el-pagination {
   margin-top: 15px;

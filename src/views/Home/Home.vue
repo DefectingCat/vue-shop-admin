@@ -42,7 +42,7 @@ getMenuList();
 </script>
 <style scoped lang="scss">
 .home-body {
-  height: 100%;
+  height: calc(100% - 60px);
   background-color: #edf1f7;
   border-radius: 10px;
 }

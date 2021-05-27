@@ -1,8 +1,12 @@
 <template>
   <ElBreadcrumb separator-class="el-icon-arrow-right">
     <ElBreadcrumbItem :to="{ path: '/home' }">首页</ElBreadcrumbItem>
-    <ElBreadcrumbItem>用户管理</ElBreadcrumbItem>
-    <ElBreadcrumbItem>用户列表</ElBreadcrumbItem>
+    <ElBreadcrumbItem>
+      <slot name="l1">用户管理</slot>
+    </ElBreadcrumbItem>
+    <ElBreadcrumbItem>
+      <slot name="l2">用户列表</slot>
+    </ElBreadcrumbItem>
   </ElBreadcrumb>
 </template>
 
