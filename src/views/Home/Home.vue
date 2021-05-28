@@ -1,11 +1,11 @@
 <template>
-  <ElContainer>
+  <ElContainer class="home-wrapper">
     <ElHeader>
       <!-- header child component -->
       <HomeHeader @fold-menu="foldMenu" :isCollapse="isCollapse" />
     </ElHeader>
 
-    <ElContainer>
+    <ElContainer class="home-main">
       <ElAside :width="isCollapse ? '64px' : '270px'">
         <!-- side child component -->
         <HomeSide :state="state" />
@@ -42,9 +42,9 @@ getMenuList();
 </script>
 <style scoped lang="scss">
 .home-body {
-  height: calc(100% - 60px);
   background-color: #edf1f7;
   border-radius: 10px;
+  overflow-y: scroll;
 }
 .el-header {
   background-color: #fff;
@@ -57,7 +57,10 @@ getMenuList();
   background-color: #fff;
   transition: all 0.3s ease;
 }
-.el-container {
+.home-wrapper {
   height: 100%;
+  .home-main {
+    overflow-y: hidden;
+  }
 }
 </style>

@@ -17,13 +17,35 @@ body,
   overflow: hidden;
 }
 
-// dialog
+// Reset element style
 .el-dialog {
   border-radius: 10px !important;
 }
 
-// card
 .el-card {
   margin-top: 14px;
   border-radius: 10px !important;
+}
+
+.el-menu--popup,
+.el-submenu .el-menu-item,
+.el-submenu__title,
+.el-menu-item {
+  border-radius: 10px !important;
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }

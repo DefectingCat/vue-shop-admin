@@ -53,18 +53,47 @@
     <ElTableColumn type="index"></ElTableColumn>
     <ElTableColumn label="角色名称" prop="roleName" width="350"></ElTableColumn>
     <ElTableColumn label="角色描述" prop="roleDesc" width="600"></ElTableColumn>
-    <ElTableColumn label="操作"> </ElTableColumn>
+    <ElTableColumn label="操作">
+      <template #default="scope">
+        <ElTooltip effect="light" content="编辑权限" placement="top">
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="emit('editRole', scope.row)"
+          ></el-button>
+        </ElTooltip>
+
+        <ElTooltip effect="light" content="删除权限" placement="top">
+          <el-button
+            size="mini"
+            type="danger"
+            icon="el-icon-delete"
+            @click="emit('deleteRole', scope.row.id)"
+          ></el-button>
+        </ElTooltip>
+      </template>
+    </ElTableColumn>
   </ElTable>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from '@vue/runtime-core';
-import { ElTable, ElTableColumn, ElTag, ElRow, ElCol } from 'element-plus';
+import { defineEmit, defineProps } from '@vue/runtime-core';
+import {
+  ElTable,
+  ElTableColumn,
+  ElTag,
+  ElRow,
+  ElCol,
+  ElButton,
+  ElTooltip,
+} from 'element-plus';
 import type { State } from '@/views/Home/Roles/rolesLogic';
 
 defineProps<{
   rolesList: State['rolesList'];
 }>();
+
+const emit = defineEmit(['editRole', 'deleteRole']);
 </script>
 
 <style scoped lang="scss">

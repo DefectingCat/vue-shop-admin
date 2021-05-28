@@ -5,27 +5,44 @@
   </Breadcrumb>
 
   <ElCard>
+    <ElButton type="primary" plain @click="openAddRoles">添加角色</ElButton>
     <RolesTable :rolesList="rolesList" />
   </ElCard>
+
+  <RolesForm
+    title="添加角色"
+    v-model:rolesForm="rolesForm"
+    :rulesRules="rolesRules"
+    :loading="loading"
+    v-model:visible="dialogVisiable"
+    ref="formRef"
+    @btnClick="addRoles"
+  />
 </template>
 
 <script lang="ts" setup>
 // element-puls
-import { ElCard } from 'element-plus';
+import { ElCard, ElButton } from 'element-plus';
 // common children
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 import RolesTable from '@/components/Home/Roles/RolesTable.vue';
+import RolesForm from '@/components/Home/Roles/RolesForm.vue';
 // logical
 import rolesLogic from './rolesLogic';
 import rolesRequest from './rolesRequest';
 import { toRefs } from '@vue/reactivity';
+import addRolesRequest from './addRoles';
 
 const { state } = rolesLogic();
-const { rolesList } = toRefs(state);
+const { rolesList, rolesForm, rolesRules, dialogVisiable, loading } =
+  toRefs(state);
 
-const { toGetRoles } = rolesRequest();
+const { toGetRoles } = rolesRequest(state);
 // Get roles list in create stage
-toGetRoles(state);
+toGetRoles();
+
+// Add roles
+const { formRef, addRoles, openAddRoles } = addRolesRequest(state);
 </script>
 
 <style scoped lang="scss"></style>

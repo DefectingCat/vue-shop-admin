@@ -56,7 +56,6 @@ import LoadingBtn from '@/components/common/LoadingBtn.vue';
 import type { State } from '@/views/Home/User/UserLogic';
 
 export default defineComponent({
-  name: 'Profile',
   props: {
     title: {
       required: true,
