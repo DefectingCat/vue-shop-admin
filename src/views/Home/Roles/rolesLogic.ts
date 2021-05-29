@@ -42,6 +42,12 @@ export type State = {
   };
   dialogVisiable: boolean;
   loading: boolean;
+  editRoles: {
+    id: number;
+    roleName: string;
+    roleDesc: string;
+  };
+  editVisiable: boolean;
 };
 
 type rolesLogic = {
@@ -67,6 +73,14 @@ const rolesLogic = (): rolesLogic => {
     dialogVisiable: false,
     // 按钮加载状态
     loading: false,
+    // 修改用户表单
+    editRoles: {
+      id: 0,
+      roleName: '',
+      roleDesc: '',
+    },
+    // 修改用户表单可见性
+    editVisiable: false,
   });
 
   return {

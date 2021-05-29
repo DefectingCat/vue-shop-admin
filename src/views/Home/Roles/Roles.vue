@@ -6,7 +6,7 @@
 
   <ElCard>
     <ElButton type="primary" plain @click="openAddRoles">添加角色</ElButton>
-    <RolesTable :rolesList="rolesList" />
+    <RolesTable :rolesList="rolesList" @editRole="openEditRoles" />
   </ElCard>
 
   <RolesForm
@@ -17,6 +17,16 @@
     v-model:visible="dialogVisiable"
     ref="formRef"
     @btnClick="addRoles"
+  />
+
+  <RolesForm
+    title="编辑角色"
+    v-model:rolesForm="editRoles"
+    :rulesRules="rolesRules"
+    :loading="loading"
+    v-model:visible="editVisiable"
+    ref="editRef"
+    @btnClick="editRolesClick"
   />
 </template>
 
@@ -32,10 +42,18 @@ import rolesLogic from './rolesLogic';
 import rolesRequest from './rolesRequest';
 import { toRefs } from '@vue/reactivity';
 import addRolesRequest from './addRoles';
+import editRolesRequest from './editRoles';
 
 const { state } = rolesLogic();
-const { rolesList, rolesForm, rolesRules, dialogVisiable, loading } =
-  toRefs(state);
+const {
+  rolesList,
+  rolesForm,
+  rolesRules,
+  dialogVisiable,
+  loading,
+  editRoles,
+  editVisiable,
+} = toRefs(state);
 
 const { toGetRoles } = rolesRequest(state);
 // Get roles list in create stage
@@ -43,6 +61,9 @@ toGetRoles();
 
 // Add roles
 const { formRef, addRoles, openAddRoles } = addRolesRequest(state);
+
+// Edit roles
+const { editRef, openEditRoles, editRolesClick } = editRolesRequest(state);
 </script>
 
 <style scoped lang="scss"></style>
