@@ -6,7 +6,14 @@
 
   <ElCard>
     <ElButton type="primary" plain @click="openAddRoles">添加角色</ElButton>
-    <RolesTable :rolesList="rolesList" @editRole="openEditRoles" />
+    <RolesTable
+      :rolesList="rolesList"
+      @editRole="openEditRoles"
+      @deleteRole="deleteRolesClick"
+      @handleClose="deleteRight"
+      @assignRights="openAssignDialog"
+      class="roles-table-loading"
+    />
   </ElCard>
 
   <RolesForm
@@ -28,6 +35,14 @@
     ref="editRef"
     @btnClick="editRolesClick"
   />
+
+  <RightsTree
+    v-model:rightsTreeVisible="rightsTreeVisible"
+    :treeProps="treeProps"
+    :rightsList="rightsList"
+    :checkKeys="checkKeys"
+    @closeRightsTree="closeRightsTree"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -37,12 +52,14 @@ import { ElCard, ElButton } from 'element-plus';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 import RolesTable from '@/components/Home/Roles/RolesTable.vue';
 import RolesForm from '@/components/Home/Roles/RolesForm.vue';
+import RightsTree from '@/components/Home/Roles/RightsTree.vue';
 // logical
 import rolesLogic from './rolesLogic';
-import rolesRequest from './rolesRequest';
 import { toRefs } from '@vue/reactivity';
 import addRolesRequest from './addRoles';
 import editRolesRequest from './editRoles';
+import deleteRolesRequest from './deleteRole';
+import toAssignRoles from './assignRoles';
 
 const { state } = rolesLogic();
 const {
@@ -53,17 +70,23 @@ const {
   loading,
   editRoles,
   editVisiable,
+  rightsTreeVisible,
+  rightsList,
+  treeProps,
+  checkKeys,
 } = toRefs(state);
-
-const { toGetRoles } = rolesRequest(state);
-// Get roles list in create stage
-toGetRoles();
 
 // Add roles
 const { formRef, addRoles, openAddRoles } = addRolesRequest(state);
 
 // Edit roles
 const { editRef, openEditRoles, editRolesClick } = editRolesRequest(state);
+
+// delete role
+const { deleteRolesClick, deleteRight } = deleteRolesRequest(state);
+
+// assign roles
+const { openAssignDialog, closeRightsTree } = toAssignRoles(state);
 </script>
 
 <style scoped lang="scss"></style>

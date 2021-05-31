@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 // element-plus
 import 'element-plus/packages/theme-chalk/src/base.scss';
+import { ElLoading } from 'element-plus';
 // international
 import lang from 'element-plus/lib/locale/lang/zh-cn';
 import 'dayjs/locale/zh-cn';
@@ -16,4 +17,9 @@ import Particles from 'particles.vue3';
 import 'normalize.css';
 import '@/assets/css/base.scss';
 
-createApp(App).use(Particles).use(store).use(router).mount('#app');
+createApp(App)
+  .use(Particles)
+  .use(ElLoading)
+  .use(store)
+  .use(router)
+  .mount('#app');

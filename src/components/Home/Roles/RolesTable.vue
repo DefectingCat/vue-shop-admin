@@ -14,7 +14,7 @@
         >
           <ElCol :span="5">
             <!-- 一级权限 -->
-            <ElTag>
+            <ElTag closable @close="emit('handleClose', scope.row, item.id)">
               {{ item.authName }}
             </ElTag>
           </ElCol>
@@ -29,7 +29,11 @@
             >
               <ElCol :span="6">
                 <!-- 二级权限 -->
-                <ElTag type="success">
+                <ElTag
+                  type="success"
+                  closable
+                  @close="emit('handleClose', scope.row, item2.id)"
+                >
                   {{ item2.authName }}
                 </ElTag>
               </ElCol>
@@ -41,6 +45,7 @@
                   v-for="item3 of item2.children"
                   :key="item3.id"
                   closable
+                  @close="emit('handleClose', scope.row, item3.id)"
                 >
                   {{ item3.authName }}
                 </ElTag>
@@ -55,7 +60,7 @@
     <ElTableColumn label="角色描述" prop="roleDesc" width="600"></ElTableColumn>
     <ElTableColumn label="操作">
       <template #default="scope">
-        <ElTooltip effect="light" content="编辑权限" placement="top">
+        <ElTooltip effect="light" content="编辑角色" placement="top">
           <el-button
             size="mini"
             icon="el-icon-edit"
@@ -63,12 +68,21 @@
           ></el-button>
         </ElTooltip>
 
-        <ElTooltip effect="light" content="删除权限" placement="top">
+        <ElTooltip effect="light" content="删除角色" placement="top">
           <el-button
             size="mini"
             type="danger"
             icon="el-icon-delete"
             @click="emit('deleteRole', scope.row.id)"
+          ></el-button>
+        </ElTooltip>
+
+        <ElTooltip effect="light" content="分配权限" placement="top">
+          <el-button
+            size="mini"
+            type="warning"
+            icon="el-icon-setting"
+            @click="emit('assignRights', scope.row)"
           ></el-button>
         </ElTooltip>
       </template>
@@ -93,7 +107,12 @@ defineProps<{
   rolesList: State['rolesList'];
 }>();
 
-const emit = defineEmit(['editRole', 'deleteRole']);
+const emit = defineEmit([
+  'editRole',
+  'deleteRole',
+  'assignRights',
+  'handleClose',
+]);
 </script>
 
 <style scoped lang="scss">

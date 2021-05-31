@@ -2,6 +2,8 @@ import { reactive } from '@vue/reactivity';
 import userRequest from './UserRequest';
 import { formRules } from '@/types/formRules';
 import { checkPhone, checkEmail } from '@/hook/common/formValidate';
+import { nextTick } from 'vue';
+import { ElLoading } from 'element-plus';
 
 export type State = {
   // 查询参数
@@ -113,7 +115,17 @@ const userLogic = (): UserLogic => {
   // 请求方法
   const { getUsers } = userRequest(state);
   // 第一次发送请求
-  getUsers();
+  (async () => {
+    await nextTick();
+    const loading = ElLoading.service({
+      target: '.user-table-loading',
+      lock: true,
+    });
+
+    await getUsers();
+    // 加载完成，关闭 loading
+    loading.close();
+  })();
 
   // 分页回调方法
   // 每页显式条数

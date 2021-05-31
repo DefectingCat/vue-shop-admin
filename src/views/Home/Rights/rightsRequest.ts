@@ -3,13 +3,13 @@ import { ElMessage } from 'element-plus';
 import { State } from './rightsLogic';
 
 type rightsRequest = {
-  toGetRightsList: (state: State) => Promise<void>;
+  toGetRightsList: (display: 'list' | 'tree') => Promise<void>;
 };
 
-const rightsRequest = (): rightsRequest => {
-  const toGetRightsList = async (state: State) => {
+const rightsRequest = (state: State): rightsRequest => {
+  const toGetRightsList = async (display: 'list' | 'tree') => {
     try {
-      const { data: res } = await request.get('/rights/list');
+      const { data: res } = await request.get(`/rights/${display}`);
       state.rightsList = res;
     } catch (e) {
       ElMessage.error('请求发送失败');

@@ -5,7 +5,7 @@
   </Breadcrumb>
 
   <ElCard>
-    <RightsTable :rightsList="rightsList" />
+    <RightsTable :rightsList="rightsList" class="rights-table-loading" />
   </ElCard>
 </template>
 
@@ -18,17 +18,11 @@ import Breadcrumb from '@/components/common/Breadcrumb.vue';
 import RightsTable from '@/components/Home/Rights/RightsTable.vue';
 // logical
 import rightsLogic from './rightsLogic';
-// network
-import rightsRequest from './rightsRequest';
+
 import { toRefs } from '@vue/reactivity';
 
 const { state } = rightsLogic();
 const { rightsList } = toRefs(state);
-
-// Get rights list
-const { toGetRightsList } = rightsRequest();
-// Send request in create stage
-toGetRightsList(state);
 </script>
 
 <style scoped lang="scss"></style>

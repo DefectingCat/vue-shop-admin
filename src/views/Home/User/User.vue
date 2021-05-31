@@ -15,6 +15,7 @@
 
     <!-- 表格 -->
     <UserTable
+      class="user-table-loading"
       :userList="userList"
       @changeUserState="changeUserState"
       @editUser="editUser"

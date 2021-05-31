@@ -1,31 +1,8 @@
 import { reactive } from '@vue/reactivity';
-
-type Roles = {
-  id: number;
-  roleName: string;
-  roleDesc: string;
-  children: [
-    {
-      id: number;
-      authName: string;
-      path: null;
-      children: [
-        {
-          id: number;
-          authName: string;
-          path: null;
-          children: [
-            {
-              id: number;
-              authName: string;
-              path: null;
-            }
-          ];
-        }
-      ];
-    }
-  ];
-};
+import { Roles } from '@/types/requestType';
+import rolesRequest from './rolesRequest';
+import { nextTick } from 'vue';
+import { ElLoading } from 'element-plus';
 
 export type State = {
   rolesList: Roles[];
@@ -48,6 +25,58 @@ export type State = {
     roleDesc: string;
   };
   editVisiable: boolean;
+  rightsTreeVisible: boolean;
+  rightsList: {
+    id: number;
+    authName: string;
+    path: null;
+    pid: number;
+    children: [
+      {
+        id: number;
+        authName: string;
+        path: null;
+        pid: number;
+        children: [
+          {
+            id: number;
+            authName: string;
+            path: null;
+            pid: string;
+          }
+        ];
+      }
+    ];
+  }[];
+  treeProps: {
+    children: 'children';
+    label: 'authName';
+  };
+  checkKeys: FlatArray<
+    number[][],
+    | 0
+    | 1
+    | -1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20
+  >[];
 };
 
 type rolesLogic = {
@@ -81,7 +110,33 @@ const rolesLogic = (): rolesLogic => {
     },
     // 修改用户表单可见性
     editVisiable: false,
+    // 分配权限表单可见性
+    rightsTreeVisible: false,
+    // 分配权限列表
+    rightsList: [],
+    // 树形组件展示列表
+    treeProps: {
+      children: 'children',
+      label: 'authName',
+    },
+    // 树形组件默认勾选数组，来自角色属性中的 id
+    checkKeys: [],
   });
+
+  // First request
+  const { toGetRoles } = rolesRequest(state);
+  // Get roles list in create stage
+  (async () => {
+    await nextTick();
+    const loading = ElLoading.service({
+      target: '.roles-table-loading',
+      lock: true,
+    });
+
+    await toGetRoles();
+    // 加载完成，关闭 loading
+    loading.close();
+  })();
 
   return {
     state,

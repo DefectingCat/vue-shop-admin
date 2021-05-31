@@ -2,6 +2,7 @@ import request from '@/hook/network/request';
 import { ElMessage } from 'element-plus';
 import { State } from './rolesLogic';
 import { Result } from '@/types/requestType';
+import { Roles } from '@/types/requestType';
 
 // 请求发送失败时返回的对象
 const failResult = {
@@ -14,10 +15,22 @@ const failResult = {
   },
 };
 
+type DeleteRes = {
+  data: Roles['children'];
+  meta: {
+    msg: string;
+    status: number;
+  };
+  [key: string]: unknown;
+};
+
 type rolesRequest = {
   toGetRoles: () => Promise<void>;
   toAddRole: () => Promise<Result>;
   toEditRole: (role: State['editRoles']) => Promise<Result>;
+  toDeleteRole: (roleId: number) => Promise<Result>;
+  toDeleteRight: (roleId: number, rightId: number) => Promise<DeleteRes>;
+  toGetRightsList: (display: 'list' | 'tree') => Promise<void>;
 };
 
 const rolesRequest = (state: State): rolesRequest => {
@@ -59,10 +72,50 @@ const rolesRequest = (state: State): rolesRequest => {
     }
   };
 
+  // 删除角色
+  const toDeleteRole = async (roleId: number) => {
+    try {
+      const result: Result = await request.delete(`roles/${roleId}`);
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      return failResult;
+    }
+  };
+
+  // 删除角色的权限
+  const toDeleteRight = async (roleId: number, rightId: number) => {
+    // try {
+    const result: DeleteRes = await request.delete(
+      `roles/${roleId}/rights/${rightId}`
+    );
+    return result;
+    // } catch (e) {
+    //   ElMessage.error('请求发送失败');
+    //   console.error(e);
+    //   return failResult;
+    // }
+  };
+
+  // 请求权限列表
+  const toGetRightsList = async (display: 'list' | 'tree') => {
+    try {
+      const { data: res } = await request.get(`/rights/${display}`);
+      state.rightsList = res;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+    }
+  };
+
   return {
     toGetRoles,
     toAddRole,
     toEditRole,
+    toDeleteRole,
+    toDeleteRight,
+    toGetRightsList,
   };
 };
 
