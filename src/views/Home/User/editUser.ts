@@ -3,7 +3,7 @@ import userRequest from './UserRequest';
 import { ref } from '@vue/reactivity';
 import { ElMessage } from 'element-plus';
 import { Ref } from 'vue';
-import UserDialog from '@/components/common/UserDialog.vue';
+import UserDialog from '@/components/Home/User/UserForm.vue';
 
 type toEditUser = {
   editFormRef: Ref<typeof UserDialog>;
@@ -36,7 +36,7 @@ const toEditUser = (state: State): toEditUser => {
 
   const editUserRequest = async () => {
     // 拿到表单
-    const formNode = editFormRef.value.$refs.formRef;
+    const formNode = editFormRef.value.formRef;
     formNode.validate(async (validate: boolean) => {
       // 验证表单
       if (!validate) return;

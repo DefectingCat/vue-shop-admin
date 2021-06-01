@@ -62,7 +62,7 @@
 import { toRefs } from '@vue/reactivity';
 import { ElCard, ElPagination } from 'element-plus';
 // 通用组件
-import UserDialog from '@/components/common/UserDialog.vue';
+import UserDialog from '@/components/Home/User/UserForm.vue';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 // 子组件
 import UserSearch from '@/components/Home/User/UserSearch.vue';

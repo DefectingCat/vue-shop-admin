@@ -2,8 +2,16 @@ import { State } from './rolesLogic';
 import rolesRequest from './rolesRequest';
 import { ElLoading, ElMessage } from 'element-plus';
 import { nextTick, ref } from '@vue/runtime-core';
+import { Ref } from 'vue';
 
-const toAssignRoles = (state: State) => {
+type toAssignRoles = {
+  openAssignDialog: (role: State['rolesList'][1]) => Promise<void>;
+  closeRightsTree: () => void;
+  rightsRef: Ref<unknown>;
+  assignRights: () => Promise<void>;
+};
+
+const toAssignRoles = (state: State): toAssignRoles => {
   // 请求方法
   const { toLoadingRoles, toGetRightsList, toAssignRequest } =
     rolesRequest(state);

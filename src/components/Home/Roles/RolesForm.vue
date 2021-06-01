@@ -1,23 +1,23 @@
 <template>
-  <ElDialog
-    :title="title"
-    v-model="dialogVisiable"
-    width="30%"
-    destroy-on-close
-  >
-    <ElForm :model="form" :rules="rulesRules" ref="formRef" label-width="80px">
+  <ElDialog :title="title" v-model="visible" width="30%" destroy-on-close>
+    <ElForm
+      :model="rolesForm"
+      :rules="rulesRules"
+      ref="formRef"
+      label-width="80px"
+    >
       <ElFormItem label="角色名称" prop="roleName">
-        <ElInput v-model="form.roleName" placeholder="角色名称"></ElInput>
+        <ElInput v-model="rolesForm.roleName" placeholder="角色名称"></ElInput>
       </ElFormItem>
       <ElFormItem label="角色描述" prop="roleDesc">
-        <ElInput v-model="form.roleDesc" placeholder="角色描述"></ElInput>
+        <ElInput v-model="rolesForm.roleDesc" placeholder="角色描述"></ElInput>
       </ElFormItem>
     </ElForm>
 
     <!-- footer -->
     <template #footer>
       <span class="dialog-footer">
-        <ElButton @click="dialogVisiable = false">取消</ElButton>
+        <ElButton @click="visible = false">取消</ElButton>
         <LoadingBtn
           msg="确定"
           :loading="loading"
@@ -28,7 +28,37 @@
   </ElDialog>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ElForm, ElFormItem, ElDialog, ElInput, ElButton } from 'element-plus';
+// 登录加载按钮
+import LoadingBtn from '@/components/common/LoadingBtn.vue';
+import type { State } from '@/views/Home/Roles/rolesLogic';
+import { defineEmit, defineProps, ref, useContext } from 'vue';
+import { useVModels } from '@vueuse/core';
+
+const props =
+  defineProps<{
+    title: string;
+    rolesForm: State['rolesForm'];
+    rulesRules: State['rolesRules'];
+    visible: boolean;
+    loading: boolean;
+  }>();
+
+const emit = defineEmit(['update:rolesForm', 'update:visible', 'btnClick']);
+
+const { rolesForm, visible } = useVModels(props, emit);
+
+// 表单 ref
+const formRef = ref();
+
+// expose component ref
+useContext().expose({
+  formRef,
+});
+</script>
+
+<!-- <script lang="ts">
 import { ElForm, ElFormItem, ElDialog, ElInput, ElButton } from 'element-plus';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
@@ -106,6 +136,6 @@ export default defineComponent({
     };
   },
 });
-</script>
+</script> -->
 
 <style scoped lang="scss"></style>

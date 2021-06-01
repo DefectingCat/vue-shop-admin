@@ -3,7 +3,7 @@ import userRequest from './UserRequest';
 import { ref } from '@vue/reactivity';
 import { ElMessage } from 'element-plus';
 import { Ref } from 'vue';
-import UserDialog from '@/components/common/UserDialog.vue';
+import UserDialog from '@/components/Home/User/UserForm.vue';
 
 type toAddUser = {
   addUser: () => void;
@@ -32,7 +32,7 @@ const toAddUser = (state: State): toAddUser => {
   // 发送添加用户请求
   const addUserRequset = () => {
     // 拿到子组件
-    const formNode = formRef.value.$refs.formRef;
+    const formNode = formRef.value.formRef;
     formNode.validate(async (validate: boolean) => {
       // 验证表单
       if (!validate) return;

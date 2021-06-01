@@ -24,7 +24,7 @@ const editRolesRequest = (state: State): editRolesRequest => {
 
   const editRolesClick = async () => {
     // 拿到子组件
-    const formNode = editRef.value.$refs.formRef;
+    const formNode = editRef.value.formRef;
 
     formNode.validate(async (validate: boolean) => {
       // 验证表单

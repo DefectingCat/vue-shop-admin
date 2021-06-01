@@ -22,7 +22,7 @@ const addRolesRequest = (state: State): addRolesRequest => {
 
   const addRoles = async () => {
     // 拿到子组件
-    const formNode = formRef.value.$refs.formRef;
+    const formNode = formRef.value.formRef;
     formNode.validate(async (validate: boolean) => {
       // 验证表单
       if (!validate) return;
