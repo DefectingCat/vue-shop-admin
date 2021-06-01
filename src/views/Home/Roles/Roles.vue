@@ -42,6 +42,8 @@
     :rightsList="rightsList"
     :checkKeys="checkKeys"
     @closeRightsTree="closeRightsTree"
+    @assignRights="assignRights"
+    ref="rightsRef"
   />
 </template>
 
@@ -86,7 +88,8 @@ const { editRef, openEditRoles, editRolesClick } = editRolesRequest(state);
 const { deleteRolesClick, deleteRight } = deleteRolesRequest(state);
 
 // assign roles
-const { openAssignDialog, closeRightsTree } = toAssignRoles(state);
+const { openAssignDialog, closeRightsTree, rightsRef, assignRights } =
+  toAssignRoles(state);
 </script>
 
 <style scoped lang="scss"></style>

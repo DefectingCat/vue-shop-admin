@@ -1,11 +1,12 @@
 import { State } from './rolesLogic';
 import rolesRequest from './rolesRequest';
-import { ElLoading } from 'element-plus';
-import { nextTick } from '@vue/runtime-core';
+import { ElLoading, ElMessage } from 'element-plus';
+import { nextTick, ref } from '@vue/runtime-core';
 
 const toAssignRoles = (state: State) => {
-  // 复用一下隔壁页面的请求权限列表方法
-  const { toGetRightsList } = rolesRequest(state);
+  // 请求方法
+  const { toLoadingRoles, toGetRightsList, toAssignRequest } =
+    rolesRequest(state);
 
   const openAssignDialog = async (role: State['rolesList'][1]) => {
     // 展示 dialog
@@ -41,6 +42,9 @@ const toAssignRoles = (state: State) => {
           item.children.map((item) => item.children.map((item) => item.id))
         )
         .flat(Infinity);
+
+      // 保存操作的角色 id
+      state.assignId = role.id;
     } catch (e) {
       console.log(e);
     }
@@ -48,15 +52,47 @@ const toAssignRoles = (state: State) => {
 
   // 关闭分配权限 dialog 回调
   const closeRightsTree = () => {
-    //
-    console.log('close tree');
-
+    // when closed dialog, clear the array
     state.checkKeys = [];
+  };
+
+  // get child component ref
+  const rightsRef = ref();
+
+  // assign rights
+  const assignRights = async () => {
+    // get child component ref method
+    const tree = rightsRef.value.treeRef;
+    // calculate checked id
+    const rids = {
+      rids: [...tree.getCheckedKeys(), ...tree.getHalfCheckedKeys()].join(','),
+    };
+
+    try {
+      const result = await toAssignRequest(state.assignId, rids);
+
+      // 返回状态验证
+      switch (result.meta.msg) {
+        case '更新成功':
+          ElMessage.success('更新成功');
+          // 关闭 dialog
+          state.rightsTreeVisible = false;
+          // 更新成功时重新请求数据
+          toLoadingRoles();
+          break;
+        case '请求发送失败':
+          throw new Error('请求发送失败');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return {
     openAssignDialog,
     closeRightsTree,
+    rightsRef,
+    assignRights,
   };
 };
 

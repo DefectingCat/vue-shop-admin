@@ -1,8 +1,9 @@
 import request from '@/hook/network/request';
-import { ElMessage } from 'element-plus';
+import { ElLoading, ElMessage } from 'element-plus';
 import { State } from './rolesLogic';
 import { Result } from '@/types/requestType';
 import { Roles } from '@/types/requestType';
+import { nextTick } from 'vue';
 
 // 请求发送失败时返回的对象
 const failResult = {
@@ -26,11 +27,18 @@ type DeleteRes = {
 
 type rolesRequest = {
   toGetRoles: () => Promise<void>;
+  toLoadingRoles: () => Promise<void>;
   toAddRole: () => Promise<Result>;
   toEditRole: (role: State['editRoles']) => Promise<Result>;
   toDeleteRole: (roleId: number) => Promise<Result>;
   toDeleteRight: (roleId: number, rightId: number) => Promise<DeleteRes>;
   toGetRightsList: (display: 'list' | 'tree') => Promise<void>;
+  toAssignRequest: (
+    roleId: number,
+    rids: {
+      rids: string;
+    }
+  ) => Promise<Result>;
 };
 
 const rolesRequest = (state: State): rolesRequest => {
@@ -43,6 +51,19 @@ const rolesRequest = (state: State): rolesRequest => {
       ElMessage.error('请求发送失败');
       console.error(e);
     }
+  };
+
+  // 为表格添加加载状态的请求角色列表
+  const toLoadingRoles = async () => {
+    await nextTick();
+    const loading = ElLoading.service({
+      target: '.roles-table-loading',
+      lock: true,
+    });
+
+    await toGetRoles();
+    // 加载完成，关闭 loading
+    loading.close();
   };
 
   // 添加角色
@@ -109,13 +130,30 @@ const rolesRequest = (state: State): rolesRequest => {
     }
   };
 
+  // 指派权限
+  const toAssignRequest = async (roleId: number, rids: { rids: string }) => {
+    try {
+      const result: Result = await request.post(
+        `/roles/${roleId}/rights`,
+        rids
+      );
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      return failResult;
+    }
+  };
+
   return {
     toGetRoles,
+    toLoadingRoles,
     toAddRole,
     toEditRole,
     toDeleteRole,
     toDeleteRight,
     toGetRightsList,
+    toAssignRequest,
   };
 };
 

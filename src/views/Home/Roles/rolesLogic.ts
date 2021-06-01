@@ -1,8 +1,6 @@
 import { reactive } from '@vue/reactivity';
 import { Roles } from '@/types/requestType';
 import rolesRequest from './rolesRequest';
-import { nextTick } from 'vue';
-import { ElLoading } from 'element-plus';
 
 export type State = {
   rolesList: Roles[];
@@ -77,6 +75,7 @@ export type State = {
     | 19
     | 20
   >[];
+  assignId: number;
 };
 
 type rolesLogic = {
@@ -121,22 +120,14 @@ const rolesLogic = (): rolesLogic => {
     },
     // 树形组件默认勾选数组，来自角色属性中的 id
     checkKeys: [],
+    // 分配权限时的角色 id
+    assignId: 0,
   });
 
   // First request
-  const { toGetRoles } = rolesRequest(state);
+  const { toLoadingRoles } = rolesRequest(state);
   // Get roles list in create stage
-  (async () => {
-    await nextTick();
-    const loading = ElLoading.service({
-      target: '.roles-table-loading',
-      lock: true,
-    });
-
-    await toGetRoles();
-    // 加载完成，关闭 loading
-    loading.close();
-  })();
+  toLoadingRoles();
 
   return {
     state,
