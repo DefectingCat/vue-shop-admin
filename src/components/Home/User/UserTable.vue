@@ -35,6 +35,15 @@
             @click="emit('deleteUser', scope.row.id)"
           ></el-button>
         </ElTooltip>
+
+        <ElTooltip effect="light" content="分配角色" placement="top">
+          <el-button
+            size="mini"
+            type="warning"
+            icon="el-icon-setting"
+            @click="emit('assignRole', scope.row)"
+          ></el-button>
+        </ElTooltip>
       </template>
     </ElTableColumn>
   </ElTable>
@@ -55,7 +64,12 @@ defineProps<{
   userList: State['userList'];
 }>();
 
-const emit = defineEmit(['changeUserState', 'editUser', 'deleteUser']);
+const emit = defineEmit([
+  'changeUserState',
+  'editUser',
+  'deleteUser',
+  'assignRole',
+]);
 </script>
 
 <style scoped lang="scss"></style>

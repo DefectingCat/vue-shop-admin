@@ -20,6 +20,7 @@
       @changeUserState="changeUserState"
       @editUser="editUser"
       @deleteUser="deleteUser"
+      @assignRole="assignRole"
     />
 
     <!-- 分页 -->
@@ -56,6 +57,16 @@
     ref="editFormRef"
     :editForm="true"
   />
+
+  <!-- 分配角色 -->
+  <AssignRole
+    v-model:assignVisible="assignVisible"
+    :toAssign="toAssign"
+    :rolesList="rolesList"
+    v-model:selectId="selectId"
+    @confirmClick="doAssign"
+    :loading="loading"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -67,12 +78,14 @@ import Breadcrumb from '@/components/common/Breadcrumb.vue';
 // 子组件
 import UserSearch from '@/components/Home/User/UserSearch.vue';
 import UserTable from '@/components/Home/User/UserTable.vue';
+import AssignRole from '@/components/Home/User/AssignRole.vue';
 // 用户逻辑
 import userLogic from './UserLogic';
 import modifyUser from './modifyUser';
 import toAddUser from './addUser';
 import toEditUser from './editUser';
 import toDeleteUser from './deleteUser';
+import toAssignRole from './assignRole';
 
 // 表单主体逻辑
 const { state, handleSizeChange, handleCurrentChange } = userLogic();
@@ -86,6 +99,10 @@ const {
   addUserRules,
   editVisible,
   editUserForm,
+  assignVisible,
+  toAssign,
+  rolesList,
+  selectId,
 } = toRefs(state);
 
 // 操作用户逻辑
@@ -96,6 +113,8 @@ const { addUser, formRef, addUserRequset } = toAddUser(state);
 const { editFormRef, editUser, editUserRequest } = toEditUser(state);
 // 删除用户
 const { deleteUser } = toDeleteUser(state);
+// 分配角色
+const { assignRole, doAssign } = toAssignRole(state);
 </script>
 
 <style scoped lang="scss">

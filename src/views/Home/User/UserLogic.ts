@@ -2,8 +2,7 @@ import { reactive } from '@vue/reactivity';
 import userRequest from './UserRequest';
 import { formRules } from '@/types/formRules';
 import { checkPhone, checkEmail } from '@/hook/common/formValidate';
-import { nextTick } from 'vue';
-import { ElLoading } from 'element-plus';
+import { Roles } from '@/types/requestType';
 
 export type State = {
   // 查询参数
@@ -56,6 +55,15 @@ export type State = {
   };
   // 修改用户时的 id
   editUserId: number;
+  // 分配角色 dialog 可见性
+  assignVisible: boolean;
+  toAssign: {
+    id: number;
+    username: string;
+    role_name: string;
+  };
+  rolesList: Roles[];
+  selectId: number | string;
 };
 
 type UserLogic = {
@@ -110,33 +118,35 @@ const userLogic = (): UserLogic => {
     },
     // 修改用户时的 id
     editUserId: 0,
+    // 分配角色 dialog 可见性
+    assignVisible: false,
+    // 被分配角色时的用户
+    toAssign: {
+      id: 0,
+      username: '',
+      role_name: '',
+    },
+    // 角色列表
+    rolesList: [],
+    // 选中的角色 id
+    selectId: '',
   });
 
   // 请求方法
-  const { getUsers } = userRequest(state);
+  const { loadingGetUser } = userRequest(state);
   // 第一次发送请求
-  (async () => {
-    await nextTick();
-    const loading = ElLoading.service({
-      target: '.user-table-loading',
-      lock: true,
-    });
-
-    await getUsers();
-    // 加载完成，关闭 loading
-    loading.close();
-  })();
+  loadingGetUser();
 
   // 分页回调方法
   // 每页显式条数
   const handleSizeChange = (val: number) => {
     state.queryInfo.pagesize = val;
-    getUsers();
+    loadingGetUser();
   };
   // 当前页
   const handleCurrentChange = (val: number) => {
     state.queryInfo.pagenum = val;
-    getUsers();
+    loadingGetUser();
   };
 
   return {
