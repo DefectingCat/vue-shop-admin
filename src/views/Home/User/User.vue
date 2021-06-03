@@ -7,15 +7,16 @@
 
   <ElCard>
     <!-- 搜索 -->
-    <UserSearch
-      :queryInfo="queryInfo"
-      @searchUser="searchUser"
-      @addUser="addUser"
+    <ToSearch
+      v-model:queryInfo="queryInfo"
+      placeholder="键入用户名以搜索"
+      btnMsg="添加用户"
+      @toSearch="searchUser"
+      @toAdd="addUser"
     />
 
     <!-- 表格 -->
     <UserTable
-      class="user-table-loading"
       :userList="userList"
       @changeUserState="changeUserState"
       @editUser="editUser"
@@ -36,7 +37,7 @@
   </ElCard>
 
   <!-- 添加用户表单 -->
-  <UserDialog
+  <UserForm
     title="添加用户"
     v-model:form="addUserForm"
     v-model:visible="dialogVisible"
@@ -47,7 +48,7 @@
   />
 
   <!-- 编辑用户表单 -->
-  <UserDialog
+  <UserForm
     title="编辑用户"
     v-model:form="editUserForm"
     v-model:visible="editVisible"
@@ -73,12 +74,12 @@
 import { toRefs } from '@vue/reactivity';
 import { ElCard, ElPagination } from 'element-plus';
 // 通用组件
-import UserDialog from '@/components/Home/User/UserForm.vue';
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
+import ToSearch from '@/components/common/ToSearch.vue';
 // 子组件
-import UserSearch from '@/components/Home/User/UserSearch.vue';
 import UserTable from '@/components/Home/User/UserTable.vue';
 import AssignRole from '@/components/Home/User/AssignRole.vue';
+import UserForm from '@/components/Home/User/UserForm.vue';
 // 用户逻辑
 import userLogic from './UserLogic';
 import modifyUser from './modifyUser';
@@ -87,7 +88,7 @@ import toEditUser from './editUser';
 import toDeleteUser from './deleteUser';
 import toAssignRole from './assignRole';
 
-// 表单主体逻辑
+// 主体逻辑
 const { state, handleSizeChange, handleCurrentChange } = userLogic();
 const {
   queryInfo,

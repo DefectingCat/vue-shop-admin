@@ -1,6 +1,7 @@
 import { ElMessage } from 'element-plus';
 import type { State } from './UserLogic';
 import userRequest from './UserRequest';
+import { toLoadingRequest } from '@/hook/network/request';
 
 type toAssignRole = {
   assignRole: (userInfo: State['userList'][1]) => void;
@@ -8,7 +9,7 @@ type toAssignRole = {
 };
 
 const toAssignRole = (state: State): toAssignRole => {
-  const { loadingGetUser, getRoles, assignRoleRequest } = userRequest(state);
+  const { getUsers, getRoles, assignRoleRequest } = userRequest(state);
 
   const assignRole = (userInfo: State['userList'][1]) => {
     if (userInfo.id) state.toAssign.id = userInfo.id;
@@ -32,7 +33,7 @@ const toAssignRole = (state: State): toAssignRole => {
         // 关闭 dialog
         state.assignVisible = false;
         // 再次获取用户
-        loadingGetUser();
+        toLoadingRequest('.user-table-loading', getUsers);
         // 情况状态
         state.toAssign = {
           id: 0,

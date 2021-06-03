@@ -1,6 +1,7 @@
 import { ElMessage, ElMessageBox } from 'element-plus';
 import userRequest from './UserRequest';
 import { State } from './UserLogic';
+import { toLoadingRequest } from '@/hook/network/request';
 
 type toDeleteUser = {
   deleteUser: (userId: number) => Promise<void>;
@@ -26,7 +27,7 @@ const toDeleteUser = (state: State): toDeleteUser => {
         case '删除成功':
           ElMessage.success('删除成功');
           // 删除成功后刷新用户列表
-          getUsers();
+          toLoadingRequest('.user-table-loading', getUsers);
           break;
         case '请求发送失败':
           throw new Error('请求发送失败');

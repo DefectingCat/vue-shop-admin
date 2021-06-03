@@ -1,12 +1,10 @@
 import { State } from './UserLogic';
 import request from '@/hook/network/request';
-import { ElLoading, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { Result } from '@/types/requestType';
-import { nextTick } from 'vue';
 
 type UserRequest = {
   getUsers: () => Promise<void>;
-  loadingGetUser: () => Promise<void>;
   changeState: (userInfo: State['userList'][1]) => Promise<void>;
   postUser: (userInfo: State['addUserForm']) => Promise<Result>;
   editUserReq: (
@@ -47,17 +45,17 @@ const userRequest = (state: State): UserRequest => {
   };
 
   // 带有加载状态的请求用户数据
-  const loadingGetUser = async () => {
-    await nextTick();
-    const loading = ElLoading.service({
-      target: '.user-table-loading',
-      lock: true,
-    });
+  // const loadingGetUser = async () => {
+  //   await nextTick();
+  //   const loading = ElLoading.service({
+  //     target: '.user-table-loading',
+  //     lock: true,
+  //   });
 
-    await getUsers();
-    // 加载完成，关闭 loading
-    loading.close();
-  };
+  //   await getUsers();
+  //   // 加载完成，关闭 loading
+  //   loading.close();
+  // };
 
   // 修改用户状态
   const changeState = async (userInfo: State['userList'][1]) => {
@@ -148,7 +146,6 @@ const userRequest = (state: State): UserRequest => {
 
   return {
     getUsers,
-    loadingGetUser,
     changeState,
     postUser,
     editUserReq,

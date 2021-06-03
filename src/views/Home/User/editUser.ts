@@ -4,6 +4,7 @@ import { ref } from '@vue/reactivity';
 import { ElMessage } from 'element-plus';
 import { Ref } from 'vue';
 import UserDialog from '@/components/Home/User/UserForm.vue';
+import { toLoadingRequest } from '@/hook/network/request';
 
 type toEditUser = {
   editFormRef: Ref<typeof UserDialog>;
@@ -60,7 +61,7 @@ const toEditUser = (state: State): toEditUser => {
       // 修改按钮加载状态
       state.loading = false;
       // 重新获取用户列表
-      getUsers();
+      toLoadingRequest('.user-table-loading', getUsers);
     });
   };
 

@@ -3,6 +3,7 @@ import userRequest from './UserRequest';
 import { formRules } from '@/types/formRules';
 import { checkPhone, checkEmail } from '@/hook/common/formValidate';
 import { Roles } from '@/types/requestType';
+import { toLoadingRequest } from '@/hook/network/request';
 
 export type State = {
   // 查询参数
@@ -133,20 +134,21 @@ const userLogic = (): UserLogic => {
   });
 
   // 请求方法
-  const { loadingGetUser } = userRequest(state);
+  const { getUsers } = userRequest(state);
   // 第一次发送请求
-  loadingGetUser();
+  // 带有加载状态的请求用户数据
+  toLoadingRequest('.user-table-loading', getUsers);
 
   // 分页回调方法
   // 每页显式条数
   const handleSizeChange = (val: number) => {
     state.queryInfo.pagesize = val;
-    loadingGetUser();
+    toLoadingRequest('.user-table-loading', getUsers);
   };
   // 当前页
   const handleCurrentChange = (val: number) => {
     state.queryInfo.pagenum = val;
-    loadingGetUser();
+    toLoadingRequest('.user-table-loading', getUsers);
   };
 
   return {

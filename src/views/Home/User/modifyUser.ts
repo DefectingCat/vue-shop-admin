@@ -1,5 +1,6 @@
 import { State } from './UserLogic';
 import userRequest from './UserRequest';
+import { toLoadingRequest } from '@/hook/network/request';
 
 type ModifyUser = {
   changeUserState: (userInfo: State['userList'][1]) => void;
@@ -23,7 +24,7 @@ const modifyUser = (state: State): ModifyUser => {
 
   // 搜索用户
   const searchUser = () => {
-    getUsers();
+    toLoadingRequest('.user-table-loading', getUsers);
   };
 
   return {
