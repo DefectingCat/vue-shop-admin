@@ -11,6 +11,8 @@
       v-model:queryInfo="queryInfo"
       placeholder="键入商品名以搜索"
       btnMsg="添加商品"
+      @toSearch="toSearchGoods"
+      @toAdd="openAddUserDialog"
     />
 
     <!-- 表格 -->
@@ -28,9 +30,17 @@ import ToSearch from '@/components/common/ToSearch.vue';
 import GoodsTable from '@/components/Home/Goods/GoodsTable.vue';
 // logical
 import goodsLogic from './GoodsLogic';
+import goodsRequest from './GoodsRequest';
+import addGoods from './addGoods';
 
 const { state } = goodsLogic();
 const { goodsList, queryInfo } = toRefs(state);
+
+// request
+const { toSearchGoods } = goodsRequest(state);
+
+// add good
+const { openAddUserDialog } = addGoods(state);
 </script>
 
 <style scoped lang="scss"></style>

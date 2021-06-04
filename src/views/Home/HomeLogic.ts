@@ -23,6 +23,9 @@ type HomeLogic = {
 };
 
 const homeLogic = (): HomeLogic => {
+  // 拿取上次的用户偏好
+  const isCollapse = localStorage.getItem('isCollapse');
+
   const state = reactive<State>({
     // 菜单列表
     menus: [],
@@ -35,12 +38,14 @@ const homeLogic = (): HomeLogic => {
       '145': '#xfy-shuju',
     },
     // 是否折叠
-    isCollapse: true,
+    isCollapse: isCollapse ? JSON.parse(isCollapse) : false,
   });
 
   // 折叠菜单
   const foldMenu = () => {
     state.isCollapse = !state.isCollapse;
+    // 保存到 localStorage
+    localStorage.setItem('isCollapse', state.isCollapse.toString());
   };
 
   return {

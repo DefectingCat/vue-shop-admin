@@ -1,6 +1,7 @@
 import request from '@/hook/network/request';
 import { ElMessage } from 'element-plus';
 import type { State } from './GoodsLogic';
+import { toLoadingRequest } from '@/hook/network/request';
 
 const goodsRequest = (state: State) => {
   const toGetGoodsList = async () => {
@@ -18,8 +19,13 @@ const goodsRequest = (state: State) => {
     }
   };
 
+  const toSearchGoods = () => {
+    toLoadingRequest('.goods-table-loading', toGetGoodsList);
+  };
+
   return {
     toGetGoodsList,
+    toSearchGoods,
   };
 };
 

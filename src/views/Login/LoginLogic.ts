@@ -26,8 +26,8 @@ const loginLogic = (): loginLogic => {
   const state = reactive({
     // 表单绑定数据
     form: {
-      username: '',
-      password: '',
+      username: 'admin',
+      password: '123456',
     },
     // 表单验证规则
     rules: {
