@@ -17,9 +17,9 @@ type goods = {
 
 export type State = {
   queryInfo: {
-    query: '';
-    pagenum: 1;
-    pagesize: 10;
+    query: string;
+    pagenum: number;
+    pagesize: number;
   };
   goodsList: goods[];
   goodsTotal: number;

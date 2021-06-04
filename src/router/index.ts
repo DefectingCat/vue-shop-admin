@@ -62,6 +62,14 @@ const routes: Array<RouteRecordRaw> = [
           ),
       },
       {
+        path: '/categories',
+        name: 'Category',
+        component: () =>
+          import(
+            /* webpackChunkName: "Category" */ '@/views/Home/Category/Category.vue'
+          ),
+      },
+      {
         path: '/goods/add',
         name: 'AddGood',
         component: () =>
