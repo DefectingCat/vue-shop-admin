@@ -60,31 +60,31 @@
     <ElTableColumn label="角色描述" prop="roleDesc" width="600"></ElTableColumn>
     <ElTableColumn label="操作">
       <template #default="scope">
-        <ElTooltip effect="light" content="编辑角色" placement="top">
-          <el-button
-            size="mini"
-            icon="el-icon-edit"
-            @click="emit('editRole', scope.row)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="编辑角色" placement="top"> -->
+        <el-button
+          size="mini"
+          icon="el-icon-edit"
+          @click="emit('editRole', scope.row)"
+        ></el-button>
+        <!-- </ElTooltip> -->
 
-        <ElTooltip effect="light" content="删除角色" placement="top">
-          <el-button
-            size="mini"
-            type="danger"
-            icon="el-icon-delete"
-            @click="emit('deleteRole', scope.row.id)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="删除角色" placement="top"> -->
+        <el-button
+          size="mini"
+          type="danger"
+          icon="el-icon-delete"
+          @click="emit('deleteRole', scope.row.id)"
+        ></el-button>
+        <!-- </ElTooltip> -->
 
-        <ElTooltip effect="light" content="分配权限" placement="top">
-          <el-button
-            size="mini"
-            type="warning"
-            icon="el-icon-setting"
-            @click="emit('assignRights', scope.row)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="分配权限" placement="top"> -->
+        <el-button
+          size="mini"
+          type="warning"
+          icon="el-icon-setting"
+          @click="emit('assignRights', scope.row)"
+        ></el-button>
+        <!-- </ElTooltip> -->
       </template>
     </ElTableColumn>
   </ElTable>
@@ -99,7 +99,6 @@ import {
   ElRow,
   ElCol,
   ElButton,
-  ElTooltip,
 } from 'element-plus';
 import type { State } from '@/views/Home/Roles/rolesLogic';
 

@@ -6,21 +6,72 @@
   </Breadcrumb>
 
   <ElCard>
+    <!-- 添加按钮 -->
+    <ElButton type="primary" plain @click="openDialog"> 添加分类 </ElButton>
+
+    <!-- 表格 -->
     <CategoryTable :tableData="categoriesList" />
+
+    <!-- 分页 -->
+    <ElPagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="queryInfo.pagenum"
+      :page-sizes="[5, 10, 20, 30]"
+      :page-size="queryInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="categoriesTotal"
+    />
+
+    <!-- 添加分类 dialog -->
+    <CategoryForm
+      v-model:addCateForm="addCateForm"
+      :addCateRules="addCateRules"
+      :cascaderOptions="cascaderOptions"
+      :cascaderProps="cascaderProps"
+      v-model:cascaderValue="cascaderValue"
+      :loading="loading"
+      v-model:visible="visible"
+      @cateChange="cateChange"
+      ref="formRef"
+      @btnClick="addCategory"
+    />
   </ElCard>
 </template>
 
 <script lang="ts" setup>
+import { toRefs } from '@vueuse/core';
 // common components
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
-import { ElCard } from 'element-plus';
+import { ElCard, ElPagination, ElButton } from 'element-plus';
+// logical
 import categoryLogic from './CategoryLogic';
+import addCategories from './addCategories';
 // children
 import CategoryTable from '@/components/Home/Category/CategoryTable.vue';
-import { toRefs } from '@vueuse/core';
+import CategoryForm from '@/components/Home/Category/CategoryForm.vue';
 
-const { state } = categoryLogic();
-const { categoriesList } = toRefs(state);
+// basic logical
+const { state, handleSizeChange, handleCurrentChange } = categoryLogic();
+const {
+  categoriesList,
+  queryInfo,
+  categoriesTotal,
+  addCateForm,
+  addCateRules,
+  cascaderOptions,
+  cascaderProps,
+  cascaderValue,
+  loading,
+  visible,
+} = toRefs(state);
+
+// addCategories
+const { openDialog, cateChange, formRef, addCategory } = addCategories(state);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-pagination {
+  margin-top: 15px;
+}
+</style>

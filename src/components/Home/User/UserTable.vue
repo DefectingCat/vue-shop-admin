@@ -27,23 +27,23 @@
           ></el-button>
         </ElTooltip>
 
-        <ElTooltip effect="light" content="删除用户" placement="top">
-          <el-button
-            size="mini"
-            type="danger"
-            icon="el-icon-delete"
-            @click="emit('deleteUser', scope.row.id)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="删除用户" placement="top"> -->
+        <el-button
+          size="mini"
+          type="danger"
+          icon="el-icon-delete"
+          @click="emit('deleteUser', scope.row.id)"
+        ></el-button>
+        <!-- </ElTooltip> -->
 
-        <ElTooltip effect="light" content="分配角色" placement="top">
-          <el-button
-            size="mini"
-            type="warning"
-            icon="el-icon-setting"
-            @click="emit('assignRole', scope.row)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="分配角色" placement="top"> -->
+        <el-button
+          size="mini"
+          type="warning"
+          icon="el-icon-setting"
+          @click="emit('assignRole', scope.row)"
+        ></el-button>
+        <!-- </ElTooltip> -->
       </template>
     </ElTableColumn>
   </ElTable>
@@ -51,13 +51,7 @@
 
 <script lang="ts" setup>
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import {
-  ElButton,
-  ElTable,
-  ElTableColumn,
-  ElSwitch,
-  ElTooltip,
-} from 'element-plus';
+import { ElButton, ElTable, ElTableColumn, ElSwitch } from 'element-plus';
 import type { State } from '@/views/Home/User/UserLogic';
 
 defineProps<{

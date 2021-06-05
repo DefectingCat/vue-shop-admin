@@ -4,6 +4,7 @@
     stripe
     row-key="cat_id"
     :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+    class="category-table-loading"
   >
     <!-- <el-table-column type="index"> </el-table-column> -->
     <el-table-column label="分类名称" prop="cat_name"> </el-table-column>
@@ -44,29 +45,19 @@
     </el-table-column>
     <el-table-column label="操作" width="200">
       <template #default>
-        <ElTooltip effect="light" content="编辑分类" placement="top">
-          <el-button size="mini" icon="el-icon-edit"></el-button>
-        </ElTooltip>
-        <ElTooltip effect="light" content="删除分类" placement="top">
-          <el-button
-            size="mini"
-            icon="el-icon-delete"
-            type="danger"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="编辑分类" placement="top"> -->
+        <el-button size="mini" icon="el-icon-edit"></el-button>
+        <!-- </ElTooltip> -->
+        <!-- <ElTooltip effect="light" content="删除分类" placement="top"> -->
+        <el-button size="mini" icon="el-icon-delete" type="danger"></el-button>
+        <!-- </ElTooltip> -->
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script lang="ts" setup>
-import {
-  ElTable,
-  ElTableColumn,
-  ElTag,
-  ElButton,
-  ElTooltip,
-} from 'element-plus';
+import { ElTable, ElTableColumn, ElTag, ElButton } from 'element-plus';
 import { defineProps } from 'vue-demi';
 import type { State } from '@/views/Home/Category/CategoryLogic';
 
