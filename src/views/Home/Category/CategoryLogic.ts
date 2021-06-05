@@ -39,7 +39,18 @@ export type State = {
   visible: boolean;
 };
 
-const categoryLogic = () => {
+type categoryLogic = {
+  state: State;
+  handleSizeChange: (val: number) => void;
+  handleCurrentChange: (val: number) => void;
+};
+
+/**
+ * 分类页面基本逻辑
+ * state 与两个处理分页的函数
+ * @returns categoryLogic
+ */
+const categoryLogic = (): categoryLogic => {
   const state: State = reactive({
     // 查询参数
     queryInfo: {

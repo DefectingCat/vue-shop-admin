@@ -22,6 +22,10 @@ type HomeLogic = {
   foldMenu: () => void;
 };
 
+/**
+ * 首页基本状态
+ * @returns HomeLogic
+ */
 const homeLogic = (): HomeLogic => {
   // 拿取上次的用户偏好
   const isCollapse = localStorage.getItem('isCollapse');

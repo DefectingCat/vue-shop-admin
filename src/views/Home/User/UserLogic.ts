@@ -73,6 +73,11 @@ type UserLogic = {
   handleCurrentChange: (val: number) => void;
 };
 
+/**
+ * 用户页面基本逻辑
+ * 包括主要状态以及两个分页方法
+ * @returns UserLogic
+ */
 const userLogic = (): UserLogic => {
   const state: State = reactive({
     // 查询参数

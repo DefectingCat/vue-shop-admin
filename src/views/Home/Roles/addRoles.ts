@@ -10,6 +10,11 @@ type addRolesRequest = {
   openAddRoles: () => void;
 };
 
+/**
+ * 这个函数为角色页提供请求方法
+ * @param  {State} state 角色页状态
+ * @returns addRolesRequest
+ */
 const addRolesRequest = (state: State): addRolesRequest => {
   const { toGetRoles, toAddRole } = rolesRequest(state);
 

@@ -1,10 +1,22 @@
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import type { State } from './CategoryLogic';
 import categoryRequest from './CategoryRequest';
 import { toLoadingRequest } from '@/hook/network/request';
 
-const addCategories = (state: State) => {
+type addCategories = {
+  openDialog: () => Promise<void>;
+  cateChange: () => void;
+  formRef: Ref<unknown>;
+  addCategory: () => Promise<void>;
+};
+
+/**
+ * 这个函数主要为添加分类的方法
+ * @param  {State} state 分类页面状态
+ * @returns addCategories
+ */
+const addCategories = (state: State): addCategories => {
   const { toGetCategories, toAddCategory } = categoryRequest(state);
 
   const openDialog = async () => {

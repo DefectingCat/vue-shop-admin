@@ -3,6 +3,7 @@ import { ElLoading } from 'element-plus';
 import { nextTick } from 'vue';
 // network
 import rightsRequest from './rightsRequest';
+// import { toLoadingRequest } from '@/hook/network/request';
 
 type Rights = {
   id: number;
@@ -11,13 +12,19 @@ type Rights = {
   pid: number;
   path: string;
 };
+
 export type State = {
   rightsList: Rights[];
 };
+
 type rightsLogic = {
   state: State;
 };
 
+/**
+ * 权限列表页主要逻辑
+ * @returns rightsLogic
+ */
 const rightsLogic = (): rightsLogic => {
   const state: State = reactive({
     rightsList: [],
@@ -26,6 +33,7 @@ const rightsLogic = (): rightsLogic => {
   // Get rights list
   const { toGetRightsList } = rightsRequest(state);
   // Send request in create stage
+  // toLoadingRequest('.rights-table-loading', toGetRightsList)
   (async () => {
     await nextTick();
     const loading = ElLoading.service({

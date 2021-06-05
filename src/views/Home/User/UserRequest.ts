@@ -27,6 +27,11 @@ const failResult = {
   },
 };
 
+/**
+ * 这个函数为用户页面提供请求方法
+ * @param  {State} state 用户页面状态
+ * @returns UserRequest
+ */
 const userRequest = (state: State): UserRequest => {
   // 请求用户数据
   const getUsers = async () => {
@@ -43,19 +48,6 @@ const userRequest = (state: State): UserRequest => {
       console.error(e);
     }
   };
-
-  // 带有加载状态的请求用户数据
-  // const loadingGetUser = async () => {
-  //   await nextTick();
-  //   const loading = ElLoading.service({
-  //     target: '.user-table-loading',
-  //     lock: true,
-  //   });
-
-  //   await getUsers();
-  //   // 加载完成，关闭 loading
-  //   loading.close();
-  // };
 
   // 修改用户状态
   const changeState = async (userInfo: State['userList'][1]) => {

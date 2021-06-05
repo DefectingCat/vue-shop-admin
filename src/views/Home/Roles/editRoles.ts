@@ -9,6 +9,11 @@ type editRolesRequest = {
   editRolesClick: () => Promise<void>;
 };
 
+/**
+ * 角色页编辑角色方法
+ * @param  {State} state 角色页状态
+ * @returns editRolesRequest
+ */
 const editRolesRequest = (state: State): editRolesRequest => {
   const { toGetRoles, toEditRole } = rolesRequest(state);
 

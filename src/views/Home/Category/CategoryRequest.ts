@@ -14,7 +14,17 @@ const failResult = {
   },
 };
 
-const categoryRequest = (state: State) => {
+type categoryRequest = {
+  toGetCategories: (toAdd?: boolean) => Promise<void>;
+  toAddCategory: () => Promise<Result>;
+};
+
+/**
+ * 这个函数主要为分类页面提供请求方法
+ * @param  {State} state 分类页面状态
+ * @returns categoryRequest
+ */
+const categoryRequest = (state: State): categoryRequest => {
   const toGetCategories = async (toAdd = false) => {
     try {
       // 如果是添加分类时获取的父级菜单

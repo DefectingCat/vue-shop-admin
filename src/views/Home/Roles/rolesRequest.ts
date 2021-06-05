@@ -41,6 +41,11 @@ type rolesRequest = {
   ) => Promise<Result>;
 };
 
+/**
+ * 角色页请求方法
+ * @param  {State} state 角色页状态
+ * @returns rolesRequest
+ */
 const rolesRequest = (state: State): rolesRequest => {
   // 请求角色列表
   const toGetRoles = async () => {

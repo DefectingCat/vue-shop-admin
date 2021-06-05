@@ -7,6 +7,11 @@ type deleteRolesRequest = {
   deleteRight: (role: State['rolesList'][1], rightId: number) => Promise<void>;
 };
 
+/**
+ * 这个函数为角色页删除角色
+ * @param  {State} state 角色页状态
+ * @returns deleteRolesRequest
+ */
 const deleteRolesRequest = (state: State): deleteRolesRequest => {
   const { toGetRoles, toDeleteRole, toDeleteRight } = rolesRequest(state);
 

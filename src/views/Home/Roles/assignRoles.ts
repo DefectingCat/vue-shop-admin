@@ -11,6 +11,11 @@ type toAssignRoles = {
   assignRights: () => Promise<void>;
 };
 
+/**
+ * 这个函数为角色页添加角色
+ * @param  {State} state 角色页状态
+ * @returns toAssignRoles
+ */
 const toAssignRoles = (state: State): toAssignRoles => {
   // 请求方法
   const { toLoadingRoles, toGetRightsList, toAssignRequest } =

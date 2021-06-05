@@ -1,6 +1,7 @@
 import { reactive } from '@vue/reactivity';
 import { Roles } from '@/types/requestType';
 import rolesRequest from './rolesRequest';
+// import { toLoadingRequest } from '@/hook/network/request';
 
 export type State = {
   rolesList: Roles[];
@@ -82,6 +83,10 @@ type rolesLogic = {
   state: State;
 };
 
+/**
+ * 角色页面基本逻辑
+ * @returns rolesLogic
+ */
 const rolesLogic = (): rolesLogic => {
   const state: State = reactive({
     // 请求的角色列表
