@@ -16,14 +16,14 @@ export type State = {
   };
   // 用户列表
   userList: {
-    id?: number;
-    username?: string;
-    mobile?: string;
-    type?: number;
-    email?: string;
-    create_time?: string;
-    mg_state?: boolean; // 当前用户的状态
-    role_name?: string;
+    id: number;
+    username: string;
+    mobile: string;
+    type: number;
+    email: string;
+    create_time: string;
+    mg_state: boolean; // 当前用户的状态
+    role_name: string;
   }[];
   // 用户总数量
   totalUsers: number;
@@ -49,10 +49,9 @@ export type State = {
   editVisible: boolean;
   // 编辑用户表单
   editUserForm: {
-    username?: string;
-    password?: string;
-    email?: string;
-    mobile?: string;
+    username: string;
+    email: string;
+    mobile: string;
   };
   // 修改用户时的 id
   editUserId: number;

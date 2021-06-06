@@ -44,12 +44,21 @@
       </template>
     </el-table-column>
     <el-table-column label="操作" width="200">
-      <template #default>
+      <template #default="scope">
         <!-- <ElTooltip effect="light" content="编辑分类" placement="top"> -->
-        <el-button size="mini" icon="el-icon-edit"></el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-edit"
+          @click="emit('edit', scope.row)"
+        ></el-button>
         <!-- </ElTooltip> -->
         <!-- <ElTooltip effect="light" content="删除分类" placement="top"> -->
-        <el-button size="mini" icon="el-icon-delete" type="danger"></el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-delete"
+          type="danger"
+          @click="emit('delete', scope.row.cat_id)"
+        ></el-button>
         <!-- </ElTooltip> -->
       </template>
     </el-table-column>
@@ -58,12 +67,14 @@
 
 <script lang="ts" setup>
 import { ElTable, ElTableColumn, ElTag, ElButton } from 'element-plus';
-import { defineProps } from 'vue-demi';
+import { defineEmit, defineProps } from 'vue-demi';
 import type { State } from '@/views/Home/Category/CategoryLogic';
 
 defineProps<{
   tableData: State['categoriesList'];
 }>();
+
+const emit = defineEmit(['edit', 'delete']);
 </script>
 
 <style scoped lang="scss"></style>

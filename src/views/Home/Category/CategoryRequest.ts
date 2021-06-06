@@ -17,6 +17,8 @@ const failResult = {
 type categoryRequest = {
   toGetCategories: (toAdd?: boolean) => Promise<void>;
   toAddCategory: () => Promise<Result>;
+  toEditCategory: () => Promise<Result>;
+  toDeleteCategory: (catId: number) => Promise<Result>;
 };
 
 /**
@@ -25,6 +27,7 @@ type categoryRequest = {
  * @returns categoryRequest
  */
 const categoryRequest = (state: State): categoryRequest => {
+  // 获取分类列表数据
   const toGetCategories = async (toAdd = false) => {
     try {
       // 如果是添加分类时获取的父级菜单
@@ -50,6 +53,7 @@ const categoryRequest = (state: State): categoryRequest => {
     }
   };
 
+  // 添加请求
   const toAddCategory = async () => {
     try {
       const result: Result = await request.post(
@@ -65,9 +69,42 @@ const categoryRequest = (state: State): categoryRequest => {
     }
   };
 
+  // 编辑请求
+  const toEditCategory = async () => {
+    try {
+      const result: Result = await request.put(
+        `categories/${state.editCateForm.cat_id}`,
+        {
+          cat_name: state.editCateForm.cat_name,
+        }
+      );
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      // 发送失败时返回类似接口的值
+      return failResult;
+    }
+  };
+
+  // 删除请求
+  const toDeleteCategory = async (catId: number) => {
+    try {
+      const result: Result = await request.delete(`categories/${catId}`);
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      // 发送失败时返回类似接口的值
+      return failResult;
+    }
+  };
+
   return {
     toGetCategories,
     toAddCategory,
+    toEditCategory,
+    toDeleteCategory,
   };
 };
 

@@ -1,4 +1,4 @@
-import { State } from './UserLogic';
+import type { State } from './UserLogic';
 import userRequest from './UserRequest';
 import { ref } from '@vue/reactivity';
 import { ElMessage } from 'element-plus';
@@ -29,7 +29,7 @@ const toEditUser = (state: State): toEditUser => {
     // 打开 dialog
     state.editVisible = true;
     // 拿到行的数据
-    row.id ? (state.editUserId = row.id) : void 0;
+    state.editUserId = row.id;
     state.editUserForm.username = row.username;
     state.editUserForm.email = row.email;
     state.editUserForm.mobile = row.mobile;

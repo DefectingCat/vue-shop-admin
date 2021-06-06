@@ -17,7 +17,7 @@
           placeholder="分类名称"
         ></ElInput>
       </ElFormItem>
-      <ElFormItem prop="cascaderValue" label="父级分类">
+      <ElFormItem prop="cascaderValue" label="父级分类" v-if="cascaderOptions">
         <el-cascader
           v-model="cascaderValue"
           :options="cascaderOptions"
@@ -60,9 +60,9 @@ const props =
   defineProps<{
     addCateForm: State['addCateForm'];
     addCateRules: State['addCateRules'];
-    cascaderOptions: State['cascaderOptions'];
-    cascaderProps: State['cascaderProps'];
-    cascaderValue: State['cascaderValue'];
+    cascaderOptions?: State['cascaderOptions'];
+    cascaderProps?: State['cascaderProps'];
+    cascaderValue?: State['cascaderValue'];
     loading: boolean;
     visible: boolean;
   }>();

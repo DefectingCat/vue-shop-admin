@@ -19,13 +19,13 @@
     </ElTableColumn>
     <ElTableColumn label="操作">
       <template #default="scope">
-        <ElTooltip effect="light" content="编辑用户" placement="top">
-          <el-button
-            size="mini"
-            icon="el-icon-edit"
-            @click="emit('editUser', scope.row)"
-          ></el-button>
-        </ElTooltip>
+        <!-- <ElTooltip effect="light" content="编辑用户" placement="top"> -->
+        <el-button
+          size="mini"
+          icon="el-icon-edit"
+          @click="emit('editUser', scope.row)"
+        ></el-button>
+        <!-- </ElTooltip> -->
 
         <!-- <ElTooltip effect="light" content="删除用户" placement="top"> -->
         <el-button

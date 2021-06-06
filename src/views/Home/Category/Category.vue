@@ -10,7 +10,11 @@
     <ElButton type="primary" plain @click="openDialog"> 添加分类 </ElButton>
 
     <!-- 表格 -->
-    <CategoryTable :tableData="categoriesList" />
+    <CategoryTable
+      :tableData="categoriesList"
+      @edit="openEdit"
+      @delete="deleteCategory"
+    />
 
     <!-- 分页 -->
     <ElPagination
@@ -36,6 +40,16 @@
       ref="formRef"
       @btnClick="addCategory"
     />
+
+    <!-- 编辑分类 dialog -->
+    <CategoryForm
+      v-model:addCateForm="editCateForm"
+      :addCateRules="addCateRules"
+      :loading="loading"
+      v-model:visible="editVisible"
+      ref="editFormRef"
+      @btnClick="editCategory"
+    />
   </ElCard>
 </template>
 
@@ -47,6 +61,7 @@ import { ElCard, ElPagination, ElButton } from 'element-plus';
 // logical
 import categoryLogic from './CategoryLogic';
 import addCategories from './addCategories';
+import editCategories from './editCategories';
 // children
 import CategoryTable from '@/components/Home/Category/CategoryTable.vue';
 import CategoryForm from '@/components/Home/Category/CategoryForm.vue';
@@ -64,10 +79,15 @@ const {
   cascaderValue,
   loading,
   visible,
+  editCateForm,
+  editVisible,
 } = toRefs(state);
 
-// addCategories
+// add category
 const { openDialog, cateChange, formRef, addCategory } = addCategories(state);
+// edit category
+const { openEdit, editFormRef, editCategory, deleteCategory } =
+  editCategories(state);
 </script>
 
 <style scoped lang="scss">

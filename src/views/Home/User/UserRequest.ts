@@ -118,7 +118,7 @@ const userRequest = (state: State): UserRequest => {
     }
   };
 
-  //
+  //  分配权限
   const assignRoleRequest = async () => {
     try {
       const result: Result = await request.put(

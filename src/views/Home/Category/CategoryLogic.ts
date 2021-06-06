@@ -11,6 +11,13 @@ type CateRes = {
   children: CateRes[];
 };
 
+type form = {
+  cat_id?: number;
+  cat_name?: string;
+  cat_pid?: number;
+  cat_level?: number;
+};
+
 export type State = {
   queryInfo: {
     type: number;
@@ -20,11 +27,7 @@ export type State = {
   categoriesList: CateRes[];
   categoriesTotal: number;
   loading: boolean;
-  addCateForm: {
-    cat_name: string;
-    cat_pid: number;
-    cat_level: number;
-  };
+  addCateForm: form;
   addCateRules: {
     cat_name: [{ required: true; message: '请输入分类'; trigger: 'blur' }];
   };
@@ -37,6 +40,8 @@ export type State = {
     checkStrictly: true;
   };
   visible: boolean;
+  editCateForm: form;
+  editVisible: boolean;
 };
 
 type categoryLogic = {
@@ -90,6 +95,13 @@ const categoryLogic = (): categoryLogic => {
     },
     // 添加分类dialog可见性
     visible: false,
+    // 修改分类表单
+    editCateForm: {
+      cat_id: 0,
+      cat_name: '',
+    },
+    // 编辑分类可见性
+    editVisible: false,
   });
 
   // 请求第一次数据
