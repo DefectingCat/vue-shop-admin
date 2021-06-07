@@ -54,8 +54,12 @@ const toAddUser = (state: State): toAddUser => {
           break;
         case '用户名已存在':
           ElMessage.error('用户名已存在');
+          // 修改按钮加载状态
+          state.loading = false;
           break;
         case '请求发送失败':
+          // 修改按钮加载状态
+          state.loading = false;
           throw new Error('请求发送失败');
       }
 

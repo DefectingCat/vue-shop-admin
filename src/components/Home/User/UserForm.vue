@@ -16,11 +16,14 @@
       <ElFormItem
         prop="password"
         label="密码"
-        show-password
         v-if="!editForm"
         @keyup.enter="emit('btnClick')"
       >
-        <ElInput v-model="form.password" placeholder="密码"></ElInput>
+        <ElInput
+          v-model="form.password"
+          show-password
+          placeholder="密码"
+        ></ElInput>
       </ElFormItem>
       <ElFormItem prop="email" label="邮箱" @keyup.enter="emit('btnClick')">
         <ElInput v-model="form.email" placeholder="邮箱"></ElInput>

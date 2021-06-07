@@ -52,6 +52,8 @@ const editCategories = (state: State): editCategories => {
           state.editVisible = false;
           break;
         case '请求发送失败':
+          // 修改按钮加载状态
+          state.loading = false;
           throw new Error('请求发送失败');
       }
 

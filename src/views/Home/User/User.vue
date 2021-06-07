@@ -18,6 +18,7 @@
     <!-- 表格 -->
     <UserTable
       :userList="userList"
+      :loading="loading"
       @changeUserState="changeUserState"
       @editUser="editUser"
       @deleteUser="deleteUser"

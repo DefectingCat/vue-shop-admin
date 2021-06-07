@@ -41,6 +41,7 @@
     :treeProps="treeProps"
     :rightsList="rightsList"
     :checkKeys="checkKeys"
+    :loading="loading"
     @closeRightsTree="closeRightsTree"
     @assignRights="assignRights"
     ref="rightsRef"

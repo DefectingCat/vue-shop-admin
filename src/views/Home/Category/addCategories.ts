@@ -74,6 +74,8 @@ const addCategories = (state: State): addCategories => {
           ElMessage.error('用户名已存在');
           break;
         case '请求发送失败':
+          // 修改按钮加载状态
+          state.loading = false;
           throw new Error('请求发送失败');
       }
       // 修改按钮加载状态

@@ -1,5 +1,10 @@
 <template>
-  <ElMenu :collapse="isCollapse" unique-opened router>
+  <ElMenu
+    :collapse="isCollapse"
+    unique-opened
+    router
+    :default-active="$route.path"
+  >
     <ElSubmenu v-for="item of menus" :key="item.id" :index="item.id.toString()">
       <template #title>
         <svg class="icon" aria-hidden="true">

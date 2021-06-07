@@ -14,6 +14,7 @@
         <ElSwitch
           v-model="scope.row.mg_state"
           @change="emit('changeUserState', scope.row)"
+          :loading="loading"
         ></ElSwitch>
       </template>
     </ElTableColumn>
@@ -56,6 +57,7 @@ import type { State } from '@/views/Home/User/UserLogic';
 
 defineProps<{
   userList: State['userList'];
+  loading: State['loading'];
 }>();
 
 const emit = defineEmit([

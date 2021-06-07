@@ -19,9 +19,11 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="emit('assignRights')">
-          确 定
-        </el-button>
+        <LoadingBtn
+          msg="确定"
+          :loading="loading"
+          @btn-click="emit('assignRights')"
+        />
       </span>
     </template>
   </ElDialog>
@@ -33,6 +35,8 @@ import { ElDialog, ElButton, ElTree } from 'element-plus';
 import type { State } from '@/views/Home/Roles/rolesLogic';
 import { useContext } from 'vue';
 import { useVModel } from '@vueuse/core';
+// 登录加载按钮
+import LoadingBtn from '@/components/common/LoadingBtn.vue';
 
 const props =
   defineProps<{
@@ -40,6 +44,7 @@ const props =
     rightsList: State['rightsList'];
     treeProps: State['treeProps'];
     checkKeys: State['checkKeys'];
+    loading: State['loading'];
   }>();
 
 // component ref

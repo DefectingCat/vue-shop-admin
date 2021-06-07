@@ -49,6 +49,8 @@ const addRolesRequest = (state: State): addRolesRequest => {
           };
           break;
         case '请求发送失败':
+          // 修改按钮加载状态
+          state.loading = false;
           throw new Error('请求发送失败');
       }
       // 修改按钮加载状态

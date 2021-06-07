@@ -20,5 +20,9 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Todo
+
+- [x] 刷新后激活对应菜单
+- [x] 加载状态的 switch
+- [x] 优化请求发送失败后的逻辑
+- [ ] 暗色模式

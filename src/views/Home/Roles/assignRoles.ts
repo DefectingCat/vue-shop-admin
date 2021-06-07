@@ -82,6 +82,9 @@ const toAssignRoles = (state: State): toAssignRoles => {
     };
 
     try {
+      // 修改按钮加载状态
+      state.loading = true;
+
       const result = await toAssignRequest(state.assignId, rids);
 
       // 返回状态验证
@@ -94,8 +97,13 @@ const toAssignRoles = (state: State): toAssignRoles => {
           toLoadingRoles();
           break;
         case '请求发送失败':
+          // 修改按钮加载状态
+          state.loading = false;
           throw new Error('请求发送失败');
       }
+
+      // 修改按钮加载状态
+      state.loading = false;
     } catch (e) {
       console.log(e);
     }
