@@ -1,6 +1,6 @@
 <template>
   <!-- Table -->
-  <ElTable :data="rolesList">
+  <ElTable :data="rolesList" row-key="id">
     <ElTableColumn type="expand">
       <template #default="scope">
         <ElRow

@@ -1,6 +1,6 @@
 <template>
   <!-- 表格 -->
-  <ElTable :data="userList" stripe class="user-table-loading">
+  <ElTable :data="userList" stripe class="user-table-loading" row-key="id">
     <ElTableColumn type="index"></ElTableColumn>
     <ElTableColumn label="姓名" prop="username" width="180"></ElTableColumn>
     <ElTableColumn label="电话" prop="mobile" width="180"></ElTableColumn>

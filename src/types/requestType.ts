@@ -36,3 +36,13 @@ export type Result = {
   };
   [key: string]: unknown;
 };
+
+export const failResult: Result = {
+  data: {
+    token: '1',
+  },
+  meta: {
+    msg: '请求发送失败',
+    status: 400,
+  },
+};

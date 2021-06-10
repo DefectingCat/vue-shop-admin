@@ -62,19 +62,27 @@ const routes: Array<RouteRecordRaw> = [
           ),
       },
       {
-        path: '/categories',
-        name: 'Category',
-        component: () =>
-          import(
-            /* webpackChunkName: "Category" */ '@/views/Home/Category/Category.vue'
-          ),
-      },
-      {
         path: '/goods/add',
         name: 'AddGood',
         component: () =>
           import(
             /* webpackChunkName: "AddGood" */ '@/views/Home/Goods/AddGood.vue'
+          ),
+      },
+      {
+        path: '/params',
+        name: 'Params',
+        component: () =>
+          import(
+            /* webpackChunkName: "Params" */ '@/views/Home/Params/Params.vue'
+          ),
+      },
+      {
+        path: '/categories',
+        name: 'Category',
+        component: () =>
+          import(
+            /* webpackChunkName: "Category" */ '@/views/Home/Category/Category.vue'
           ),
       },
     ],

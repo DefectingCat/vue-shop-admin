@@ -25,7 +25,6 @@ const editCategories = (state: State): editCategories => {
     // 绑定
     state.editCateForm.cat_id = row.cat_id;
     state.editCateForm.cat_name = row.cat_name;
-    console.log(row.cat_name);
   };
 
   // 编辑表单

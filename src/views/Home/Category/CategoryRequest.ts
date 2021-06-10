@@ -1,18 +1,7 @@
 import { ElMessage } from 'element-plus';
 import request from '@/hook/network/request';
 import type { State } from './CategoryLogic';
-import { Result } from '@/types/requestType';
-
-// 请求发送失败时返回的对象
-const failResult = {
-  data: {
-    token: '1',
-  },
-  meta: {
-    msg: '请求发送失败',
-    status: 400,
-  },
-};
+import { Result, failResult } from '@/types/requestType';
 
 type categoryRequest = {
   toGetCategories: (toAdd?: boolean) => Promise<void>;
