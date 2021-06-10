@@ -34,6 +34,7 @@ export type State = {
     value: 'cat_id';
     label: 'cat_name';
     children: 'children';
+    expandTrigger: 'hover';
   };
   cateId: number;
   attributes: attr[];
@@ -73,6 +74,7 @@ const paramsLogic = (): paramsLogic => {
       value: 'cat_id',
       label: 'cat_name',
       children: 'children',
+      expandTrigger: 'hover',
     },
     // 分类 id
     cateId: 0,
