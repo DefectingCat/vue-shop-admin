@@ -6,8 +6,10 @@ import { failResult, Result } from '@/types/requestType';
 type paramsRequest = {
   toGetCategories: () => Promise<void>;
   toGetAttribute: () => Promise<attr[] | undefined>;
-  toAddAttribute: (row: attr, sel: 'only' | 'many') => Promise<void>;
-  toAddParam: (attr_sel: 'only' | 'many') => Promise<Result>;
+  toAddAttribute: (row: attr) => Promise<void>;
+  toAddParam: () => Promise<Result>;
+  toEditManyParam: () => Promise<Result>;
+  toDeleteParam: (row: attr) => Promise<Result>;
 };
 
 const paramsRequest = (state: State): paramsRequest => {
@@ -28,7 +30,7 @@ const paramsRequest = (state: State): paramsRequest => {
       const result: attr[] = await request
         .get(`categories/${state.cateId}/attributes`, {
           params: {
-            sel: 'many',
+            sel: state.activeName,
           },
         })
         .then((res) => res.data);
@@ -40,12 +42,12 @@ const paramsRequest = (state: State): paramsRequest => {
   };
 
   // 添加 tag
-  const toAddAttribute = async (row: attr, sel: 'only' | 'many') => {
+  const toAddAttribute = async (row: attr) => {
     try {
-      await request.post(`categories/${row.cat_id}/${row.attr_id}`, {
+      await request.put(`categories/${row.cat_id}/attributes/${row.attr_id}`, {
         attr_name: row.attr_name,
-        sel,
         attr_vals: row.attr_vals,
+        attr_sel: state.activeName,
       });
     } catch (e) {
       ElMessage.error('请求发送失败');
@@ -54,14 +56,47 @@ const paramsRequest = (state: State): paramsRequest => {
   };
 
   // 添加参数
-  const toAddParam = async (attr_sel: 'only' | 'many') => {
+  const toAddParam = async () => {
     try {
       const result: Result = await request.post(
         `categories/${state.cateId}/attributes`,
         {
           attr_name: state.paramForm.paramName,
-          attr_sel,
+          attr_sel: state.activeName,
         }
+      );
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      return failResult;
+    }
+  };
+
+  // 编辑动态参数
+  const toEditManyParam = async () => {
+    const row = state.row;
+    try {
+      const result: Result = await request.put(
+        `categories/${row.cat_id}/attributes/${row.attr_id}`,
+        {
+          attr_name: state.paramForm.paramName,
+          attr_sel: state.activeName,
+        }
+      );
+      return result;
+    } catch (e) {
+      ElMessage.error('请求发送失败');
+      console.error(e);
+      return failResult;
+    }
+  };
+
+  // 删除分类参数
+  const toDeleteParam = async (row: attr) => {
+    try {
+      const result: Result = await request.delete(
+        `categories/${row.cat_id}/attributes/${row.attr_id}`
       );
       return result;
     } catch (e) {
@@ -76,6 +111,8 @@ const paramsRequest = (state: State): paramsRequest => {
     toGetAttribute,
     toAddAttribute,
     toAddParam,
+    toEditManyParam,
+    toDeleteParam,
   };
 };
 

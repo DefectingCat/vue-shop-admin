@@ -4,14 +4,12 @@
     <template #l2> 权限列表 </template>
   </Breadcrumb>
 
-  <ElCard>
+  <el-card>
     <RightsTable :rightsList="rightsList" class="rights-table-loading" />
-  </ElCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
-// element-puls
-import { ElCard } from 'element-plus';
 // common children
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 // children component

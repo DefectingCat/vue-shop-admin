@@ -37,7 +37,6 @@ import { defineEmit } from 'vue';
 import { defineProps } from 'vue-demi';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
-import { ElButton, ElDialog, ElSelect, ElOption } from 'element-plus';
 import type { State } from '@/views/Home/User/UserLogic';
 
 const props =

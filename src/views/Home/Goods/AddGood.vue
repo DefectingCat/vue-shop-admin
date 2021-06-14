@@ -1,13 +1,13 @@
 <template>
   <!-- 面包屑导航 -->
-  <ElBreadcrumb separator-class="el-icon-arrow-right">
-    <ElBreadcrumbItem :to="{ path: '/home' }">首页</ElBreadcrumbItem>
-    <ElBreadcrumbItem> 商品管理 </ElBreadcrumbItem>
-    <ElBreadcrumbItem :to="{ path: '/goods' }"> 商品列表 </ElBreadcrumbItem>
-    <ElBreadcrumbItem> 添加商品 </ElBreadcrumbItem>
-  </ElBreadcrumb>
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item> 商品管理 </el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/goods' }"> 商品列表 </el-breadcrumb-item>
+    <el-breadcrumb-item> 添加商品 </el-breadcrumb-item>
+  </el-breadcrumb>
 
-  <ElCard>
+  <el-card>
     <el-alert title="添加商品" type="info" center show-icon :closable="false">
     </el-alert>
 
@@ -29,22 +29,13 @@
         {{ item.title }}
       </el-tab-pane>
     </el-tabs>
-  </ElCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
 // common components
 import { toRefs } from '@vueuse/core';
-import {
-  ElBreadcrumb,
-  ElBreadcrumbItem,
-  ElCard,
-  ElAlert,
-  ElSteps,
-  ElStep,
-  ElTabs,
-  ElTabPane,
-} from 'element-plus';
+import {} from 'element-plus';
 import { reactive } from 'vue';
 export type State = {
   addGoodSteps: {

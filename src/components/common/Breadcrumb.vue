@@ -1,17 +1,15 @@
 <template>
-  <ElBreadcrumb separator-class="el-icon-arrow-right">
-    <ElBreadcrumbItem :to="{ path: '/home' }">首页</ElBreadcrumbItem>
-    <ElBreadcrumbItem>
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>
       <slot name="l1">用户管理</slot>
-    </ElBreadcrumbItem>
-    <ElBreadcrumbItem>
+    </el-breadcrumb-item>
+    <el-breadcrumb-item>
       <slot name="l2">用户列表</slot>
-    </ElBreadcrumbItem>
-  </ElBreadcrumb>
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 
-<script lang="ts" setup>
-import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus';
-</script>
+<script lang="ts" setup></script>
 
 <style scoped lang="scss"></style>

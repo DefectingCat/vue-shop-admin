@@ -34,6 +34,13 @@ body,
   border-radius: 10px !important;
 }
 
+// cascader scroll
+.el-cascader-panel .el-scrollbar__wrap {
+  max-height: 200px;
+  min-height: 100px;
+  overflow-x: hidden;
+}
+
 /* 滚动槽 */
 ::-webkit-scrollbar {
   width: 8px;

@@ -1,24 +1,28 @@
 <template>
   <!-- 表格 -->
-  <ElTable :data="userList" stripe class="user-table-loading" row-key="id">
-    <ElTableColumn type="index"></ElTableColumn>
-    <ElTableColumn label="姓名" prop="username" width="180"></ElTableColumn>
-    <ElTableColumn label="电话" prop="mobile" width="180"></ElTableColumn>
-    <ElTableColumn label="角色" prop="role_name" width="180"></ElTableColumn>
-    <ElTableColumn label="状态" width="80">
+  <el-table :data="userList" stripe class="user-table-loading" row-key="id">
+    <el-table-column type="index"></el-table-column>
+    <el-table-column label="姓名" prop="username" width="180"></el-table-column>
+    <el-table-column label="电话" prop="mobile" width="180"></el-table-column>
+    <el-table-column
+      label="角色"
+      prop="role_name"
+      width="180"
+    ></el-table-column>
+    <el-table-column label="状态" width="80">
       <!--
           通过 scoped slot 拿到子组件的状态
           也就是每一行的状态
         -->
       <template #default="scope">
-        <ElSwitch
+        <el-switch
           v-model="scope.row.mg_state"
           @change="emit('changeUserState', scope.row)"
           :loading="loading"
-        ></ElSwitch>
+        ></el-switch>
       </template>
-    </ElTableColumn>
-    <ElTableColumn label="操作">
+    </el-table-column>
+    <el-table-column label="操作">
       <template #default="scope">
         <!-- <ElTooltip effect="light" content="编辑用户" placement="top"> -->
         <el-button
@@ -46,13 +50,12 @@
         ></el-button>
         <!-- </ElTooltip> -->
       </template>
-    </ElTableColumn>
-  </ElTable>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import { ElButton, ElTable, ElTableColumn, ElSwitch } from 'element-plus';
 import type { State } from '@/views/Home/User/UserLogic';
 
 defineProps<{

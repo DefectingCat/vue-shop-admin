@@ -1,7 +1,12 @@
 <template>
-  <ElForm ref="loginForm" :model="form" :rules="rules" class="login-body__form">
-    <ElFormItem prop="username">
-      <ElInput
+  <el-form
+    ref="loginForm"
+    :model="form"
+    :rules="rules"
+    class="login-body__form"
+  >
+    <el-form-item prop="username">
+      <el-input
         v-model="form.username"
         placeholder="用户名"
         @keyup.enter="login"
@@ -9,11 +14,11 @@
         <template #prefix>
           <i class="el-input__icon el-icon-user"></i>
         </template>
-      </ElInput>
-    </ElFormItem>
+      </el-input>
+    </el-form-item>
 
-    <ElFormItem prop="password">
-      <ElInput
+    <el-form-item prop="password">
+      <el-input
         v-model="form.password"
         placeholder="密码"
         show-password
@@ -22,19 +27,18 @@
         <template #prefix>
           <i class="el-input__icon el-icon-lock"></i>
         </template>
-      </ElInput>
-    </ElFormItem>
+      </el-input>
+    </el-form-item>
 
-    <ElFormItem class="login-body__btn">
+    <el-form-item class="login-body__btn">
       <LoadingBtn :loading="loading" msg="登录" @btnClick="login" />
       <ElButton type="info" plain @click="resetForm">重置</ElButton>
-    </ElFormItem>
-  </ElForm>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts" setup>
 import { toRefs } from 'vue';
-import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 // logical
 import loginLogic from '@/views/Login/LoginLogic';
 // 登录加载按钮

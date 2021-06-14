@@ -1,9 +1,9 @@
 <template>
-  <ElButton type="primary" plain @click="clickBtn">
+  <el-button type="primary" plain @click="clickBtn">
     <span :class="{ 'hidden-word': loading }">{{ msg }}</span>
     <!-- loading icon -->
     <img v-show="loading" class="loading-img" src="@/assets/img/loading.svg" />
-  </ElButton>
+  </el-button>
 </template>
 
 <script lang="ts" setup>
@@ -16,7 +16,6 @@
  */
 import { toRefs } from '@vue/reactivity';
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import { ElButton } from 'element-plus';
 
 const props =
   defineProps<{

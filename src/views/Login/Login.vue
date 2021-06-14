@@ -1,8 +1,8 @@
 <template>
   <div class="login-wrapper">
     <!-- 24列响应式布局 -->
-    <ElRow class="login-row">
-      <ElCol :xs="24" :sm="10" :md="10" :lg="8" :xl="5">
+    <el-row class="login-row">
+      <el-col :xs="24" :sm="10" :md="10" :lg="8" :xl="5">
         <div class="login-body">
           <!-- 头像 -->
           <div class="login-body__avatar">
@@ -11,8 +11,8 @@
           <!-- 登录表单 -->
           <LoginForm />
         </div>
-      </ElCol>
-    </ElRow>
+      </el-col>
+    </el-row>
   </div>
   <Particles
     id="tsparticles"
@@ -118,7 +118,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElRow, ElCol } from 'element-plus';
 import LoginForm from '@/components/Login/LoginForm.vue';
 </script>
 

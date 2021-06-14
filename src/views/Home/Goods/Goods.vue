@@ -5,7 +5,7 @@
     <template #l2> 商品列表 </template>
   </Breadcrumb>
 
-  <ElCard>
+  <el-card>
     <!-- 搜索 -->
     <ToSearch
       v-model:queryInfo="queryInfo"
@@ -17,14 +17,13 @@
 
     <!-- 表格 -->
     <GoodsTable :goodsList="goodsList"></GoodsTable>
-  </ElCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
 import { toRefs } from '@vueuse/core';
 // common components
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
-import { ElCard } from 'element-plus';
 import ToSearch from '@/components/common/ToSearch.vue';
 // children
 import GoodsTable from '@/components/Home/Goods/GoodsTable.vue';

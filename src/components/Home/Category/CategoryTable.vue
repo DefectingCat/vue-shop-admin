@@ -1,7 +1,6 @@
 <template>
   <el-table
     :data="tableData"
-    stripe
     row-key="cat_id"
     :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     class="category-table-loading"
@@ -66,7 +65,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElTable, ElTableColumn, ElTag, ElButton } from 'element-plus';
 import { defineEmit, defineProps } from 'vue-demi';
 import type { State } from '@/views/Home/Category/CategoryLogic';
 

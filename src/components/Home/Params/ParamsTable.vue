@@ -1,51 +1,55 @@
 <template>
-  <ElTable
+  <el-table
     :data="attributes"
     stripe
     row-key="attr_id"
     class="param-table-loading"
   >
-    <ElTableColumn type="expand">
-      <template #default="scope">
-        <ElTag v-for="item of scope.row.attrTags" :key="item" closable>
+    <el-table-column type="expand">
+      <template #default="{ row }">
+        <el-tag
+          v-for="(item, index) of row.attrTags"
+          :key="item"
+          closable
+          @close="emit('closeTag', index, row)"
+        >
           {{ item }}
-        </ElTag>
-        <ElInput
-          v-if="scope.row.showInput"
+        </el-tag>
+        <el-input
+          v-if="row.showInput"
           v-model="inputValue"
           ref="saveTagInput"
           class="input-new-tag"
           size="small"
-          @keyup.enter="handleInputConfirm(scope.row)"
-          @blur="handleInputConfirm(scope.row)"
-        ></ElInput>
-        <ElButton v-else @click="btnInput(scope.row)" class="button-new-tag"
-          >添加属性</ElButton
+          @keyup.enter="handleInputConfirm(row)"
+          @blur="handleInputConfirm(row)"
+        ></el-input>
+        <el-button v-else @click="btnInput(row)" class="button-new-tag"
+          >添加属性</el-button
         >
       </template>
-    </ElTableColumn>
-    <ElTableColumn type="index" label="序号"></ElTableColumn>
-    <ElTableColumn label="参数名称" prop="attr_name"></ElTableColumn>
-    <ElTableColumn label="操作">
-      <template #default="scope">
+    </el-table-column>
+    <el-table-column type="index" label="序号"></el-table-column>
+    <el-table-column label="参数名称" prop="attr_name"></el-table-column>
+    <el-table-column label="操作">
+      <template #default="{ row }">
         <el-button
           size="mini"
           icon="el-icon-edit"
-          @click="emit('editParam', scope.row)"
+          @click="emit('editParam', row)"
         ></el-button>
         <el-button
           size="mini"
           type="danger"
           icon="el-icon-delete"
-          @click="emit('deleteParam', scope.row.id)"
+          @click="emit('deleteParam', row)"
         ></el-button>
       </template>
-    </ElTableColumn>
-  </ElTable>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
-import { ElTable, ElTableColumn, ElTag, ElInput, ElButton } from 'element-plus';
 import { defineEmit, defineProps, nextTick, ref } from 'vue-demi';
 import type { State, attr } from '@/views/Home/Params/ParamsLogic';
 import { useVModels } from '@vueuse/core';
@@ -60,6 +64,7 @@ const emit = defineEmit([
   'addAttr',
   'editParam',
   'deleteParam',
+  'closeTag',
 ]);
 
 // 双向绑定
@@ -83,6 +88,7 @@ const handleInputConfirm = (row: attr) => {
   if (inputValue.value) {
     // 找到对应的 attr
     row.attrTags.push(inputValue.value);
+    // 将字符串合并为数组
     row.attr_vals = row.attrTags.join(' ');
     inputValue.value = '';
     // 散发发送请求

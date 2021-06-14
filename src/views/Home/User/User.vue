@@ -5,7 +5,7 @@
     <template #l2> 用户列表 </template>
   </Breadcrumb>
 
-  <ElCard>
+  <el-card>
     <!-- 搜索 -->
     <ToSearch
       v-model:queryInfo="queryInfo"
@@ -26,7 +26,7 @@
     />
 
     <!-- 分页 -->
-    <ElPagination
+    <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
@@ -35,7 +35,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalUsers"
     />
-  </ElCard>
+  </el-card>
 
   <!-- 添加用户表单 -->
   <UserForm
@@ -73,7 +73,6 @@
 
 <script lang="ts" setup>
 import { toRefs } from '@vue/reactivity';
-import { ElCard, ElPagination } from 'element-plus';
 // 通用组件
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 import ToSearch from '@/components/common/ToSearch.vue';

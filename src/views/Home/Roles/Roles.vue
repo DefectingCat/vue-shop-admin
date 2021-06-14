@@ -4,8 +4,8 @@
     <template #l2> 角色列表 </template>
   </Breadcrumb>
 
-  <ElCard>
-    <ElButton type="primary" plain @click="openAddRoles">添加角色</ElButton>
+  <el-card>
+    <el-button type="primary" plain @click="openAddRoles">添加角色</el-button>
     <RolesTable
       :rolesList="rolesList"
       @editRole="openEditRoles"
@@ -14,7 +14,7 @@
       @assignRights="openAssignDialog"
       class="roles-table-loading"
     />
-  </ElCard>
+  </el-card>
 
   <RolesForm
     title="添加角色"
@@ -49,8 +49,6 @@
 </template>
 
 <script lang="ts" setup>
-// element-puls
-import { ElCard, ElButton } from 'element-plus';
 // common children
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 import RolesTable from '@/components/Home/Roles/RolesTable.vue';

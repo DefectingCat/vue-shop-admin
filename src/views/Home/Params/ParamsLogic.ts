@@ -37,7 +37,8 @@ export type State = {
     expandTrigger: 'hover';
   };
   cateId: number;
-  attributes: attr[];
+  manyData: attr[];
+  onlyData: attr[];
   paramForm: {
     paramName: string;
   };
@@ -50,11 +51,24 @@ export type State = {
   };
   loading: boolean;
   visible: boolean;
+  onlyVisible: boolean;
+  editVisible: boolean;
+  eidtOnlyVisible: boolean;
+  row: attr;
+  activeName: string;
 };
 
 type paramsLogic = {
   state: State;
   openAddForm: () => void;
+};
+
+// table 切换验证 key
+export const validKeys: {
+  [key: string]: 'manyData' | 'onlyData';
+} = {
+  many: 'manyData',
+  only: 'onlyData',
 };
 
 const paramsLogic = (): paramsLogic => {
@@ -78,8 +92,10 @@ const paramsLogic = (): paramsLogic => {
     },
     // 分类 id
     cateId: 0,
-    // 属性列表
-    attributes: [],
+    // 动态属性列表
+    manyData: [],
+    // 静态属性列表
+    onlyData: [],
     // 添加参数表单
     paramForm: {
       paramName: '',
@@ -92,8 +108,27 @@ const paramsLogic = (): paramsLogic => {
     },
     // 加载按钮状态
     loading: false,
-    // paramForm 可见性
+    // 动态属性 paramForm 可见性
     visible: false,
+    // 静态属性 paramForm 可见性
+    onlyVisible: false,
+    // 编辑动态参数表单
+    editVisible: false,
+    // 编辑静态参数表单
+    eidtOnlyVisible: false,
+    // 行的数据
+    row: {
+      attr_id: 0,
+      attr_name: '',
+      cat_id: 0,
+      attr_sel: '',
+      attr_write: '',
+      attr_vals: '',
+      attrTags: [],
+      showInput: false,
+    },
+    // tabs 当前激活标签
+    activeName: 'many',
   });
 
   const { toGetCategories } = paramsRequest(state);
@@ -101,12 +136,13 @@ const paramsLogic = (): paramsLogic => {
   toGetCategories();
 
   const openAddForm = () => {
+    const name = state.activeName;
     // 如果没有选择三级分类，则不允许打开
-    if (!state.attributes.length) {
+    if (!state[validKeys[name]].length) {
       ElMessage.error('请先选择分类！');
       return;
     }
-    state.visible = true;
+    name === 'many' ? (state.visible = true) : (state.onlyVisible = true);
   };
 
   return {

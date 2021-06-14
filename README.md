@@ -1,5 +1,7 @@
 # 基于 Vue3 + TS 后台管理系统
 
+[![构建状态](https://defectink.coding.net/badges/xfy/job/647884/build.svg)](https://defectink.coding.net/p/xfy/ci/job)
+
 ## Project setup
 ```
 yarn install

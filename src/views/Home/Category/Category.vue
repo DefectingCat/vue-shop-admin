@@ -5,9 +5,9 @@
     <template #l2> 商品分类 </template>
   </Breadcrumb>
 
-  <ElCard>
+  <el-card>
     <!-- 添加按钮 -->
-    <ElButton type="primary" plain @click="openDialog"> 添加分类 </ElButton>
+    <el-button type="primary" plain @click="openDialog"> 添加分类 </el-button>
 
     <!-- 表格 -->
     <CategoryTable
@@ -17,7 +17,7 @@
     />
 
     <!-- 分页 -->
-    <ElPagination
+    <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
@@ -50,14 +50,13 @@
       ref="editFormRef"
       @btnClick="editCategory"
     />
-  </ElCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
 import { toRefs } from '@vueuse/core';
 // common components
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
-import { ElCard, ElPagination, ElButton } from 'element-plus';
 // logical
 import categoryLogic from './CategoryLogic';
 import addCategories from './addCategories';

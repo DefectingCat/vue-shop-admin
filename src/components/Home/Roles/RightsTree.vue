@@ -1,11 +1,11 @@
 <template>
-  <ElDialog
+  <el-dialog
     title="分配权限"
     v-model="dialogVisible"
     width="40%"
     @close="emit('closeRightsTree')"
   >
-    <ElTree
+    <el-tree
       show-checkbox
       default-expand-all
       highlight-current
@@ -15,7 +15,7 @@
       node-key="id"
       :default-checked-keys="checkKeys"
       ref="treeRef"
-    ></ElTree>
+    ></el-tree>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -26,12 +26,11 @@
         />
       </span>
     </template>
-  </ElDialog>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { defineEmit, defineProps, ref } from '@vue/runtime-core';
-import { ElDialog, ElButton, ElTree } from 'element-plus';
 import type { State } from '@/views/Home/Roles/rolesLogic';
 import { useContext } from 'vue';
 import { useVModel } from '@vueuse/core';

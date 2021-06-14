@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElCascader } from 'element-plus';
 import { defineEmit, defineProps } from 'vue-demi';
 import type { State } from '@/views/Home/Params/ParamsLogic';
 import { useVModels } from '@vueuse/core';

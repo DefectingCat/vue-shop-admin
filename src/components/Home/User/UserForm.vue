@@ -1,37 +1,37 @@
 <template>
-  <ElDialog :title="title" v-model="visible" width="30%" destroy-on-close>
+  <el-dialog :title="title" v-model="visible" width="30%" destroy-on-close>
     <!-- 主体区域 -->
-    <ElForm ref="formRef" :model="form" label-width="66px" :rules="rules">
-      <ElFormItem
+    <el-form ref="formRef" :model="form" label-width="66px" :rules="rules">
+      <el-form-item
         prop="username"
         label="用户名"
         @keyup.enter="emit('btnClick')"
       >
-        <ElInput
+        <el-input
           v-model="form.username"
           placeholder="用户名"
           :disabled="editForm"
-        ></ElInput>
-      </ElFormItem>
-      <ElFormItem
+        ></el-input>
+      </el-form-item>
+      <el-form-item
         prop="password"
         label="密码"
         v-if="!editForm"
         @keyup.enter="emit('btnClick')"
       >
-        <ElInput
+        <el-input
           v-model="form.password"
           show-password
           placeholder="密码"
-        ></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="email" label="邮箱" @keyup.enter="emit('btnClick')">
-        <ElInput v-model="form.email" placeholder="邮箱"></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="mobile" label="手机" @keyup.enter="emit('btnClick')">
-        <ElInput v-model="form.mobile" placeholder="手机"></ElInput>
-      </ElFormItem>
-    </ElForm>
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="email" label="邮箱" @keyup.enter="emit('btnClick')">
+        <el-input v-model="form.email" placeholder="邮箱"></el-input>
+      </el-form-item>
+      <el-form-item prop="mobile" label="手机" @keyup.enter="emit('btnClick')">
+        <el-input v-model="form.mobile" placeholder="手机"></el-input>
+      </el-form-item>
+    </el-form>
     <!-- footer -->
     <template #footer>
       <span class="dialog-footer">
@@ -43,12 +43,11 @@
         />
       </span>
     </template>
-  </ElDialog>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { ref, defineProps, defineEmit, useContext } from 'vue';
-import { ElInput, ElButton, ElDialog, ElForm, ElFormItem } from 'element-plus';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
 import type { State } from '@/views/Home/User/UserLogic';

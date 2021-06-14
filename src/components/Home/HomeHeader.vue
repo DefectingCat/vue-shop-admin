@@ -12,13 +12,13 @@
   </div>
 
   <div class="head-right">
-    <ElButton type="info" plain @click="logout">退出</ElButton>
+    <el-button type="info" plain @click="logout">退出</el-button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import { ElButton, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 
 defineProps<{

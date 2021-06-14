@@ -1,11 +1,15 @@
 <template>
-  <ElMenu
+  <el-menu
     :collapse="isCollapse"
     unique-opened
     router
     :default-active="$route.path"
   >
-    <ElSubmenu v-for="item of menus" :key="item.id" :index="item.id.toString()">
+    <el-submenu
+      v-for="item of menus"
+      :key="item.id"
+      :index="item.id.toString()"
+    >
       <template #title>
         <svg class="icon" aria-hidden="true">
           <use :xlink:href="icons[item.id]"></use>
@@ -13,8 +17,8 @@
         <span>{{ item.authName }}</span>
       </template>
 
-      <ElMenuItemGroup>
-        <ElMenuItem
+      <el-menu-item-group>
+        <el-menu-item
           v-for="subItem of item.children"
           :key="subItem.id"
           :index="`/${subItem.path}`"
@@ -23,15 +27,14 @@
             <i class="el-icon-menu"></i>
             {{ subItem.authName }}
           </template>
-        </ElMenuItem>
-      </ElMenuItemGroup>
-    </ElSubmenu>
-  </ElMenu>
+        </el-menu-item>
+      </el-menu-item-group>
+    </el-submenu>
+  </el-menu>
 </template>
 
 <script lang="ts" setup>
 import { defineProps, toRefs } from '@vue/runtime-core';
-import { ElMenu, ElSubmenu, ElMenuItem, ElMenuItemGroup } from 'element-plus';
 import type { State } from '@/views/Home/HomeLogic';
 
 const props =

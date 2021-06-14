@@ -1,30 +1,30 @@
 <template>
-  <ElContainer class="home-wrapper">
-    <ElHeader>
+  <el-container class="home-wrapper">
+    <el-header>
       <!-- header child component -->
       <HomeHeader @fold-menu="foldMenu" :isCollapse="isCollapse" />
-    </ElHeader>
+    </el-header>
 
-    <ElContainer class="home-main">
-      <ElAside :width="isCollapse ? '64px' : '270px'">
+    <el-container class="home-main">
+      <el-aside :width="isCollapse ? '64px' : '270px'">
         <!-- side child component -->
         <HomeSide :state="state" />
-      </ElAside>
+      </el-aside>
 
-      <ElMain class="home-body">
-        <router-view v-slot="{ Component }">
+      <el-main class="home-body">
+        <!-- <router-view v-slot="{ Component }">
           <keep-alive exclude="">
             <component :is="Component" />
           </keep-alive>
-        </router-view>
-      </ElMain>
-    </ElContainer>
-  </ElContainer>
+        </router-view> -->
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script lang="ts" setup>
 import { toRefs } from '@vue/reactivity';
-import { ElContainer, ElHeader, ElMain, ElAside } from 'element-plus';
 // child components
 import HomeHeader from '@/components/Home/HomeHeader.vue';
 import HomeSide from '@/components/Home/HomeSide.vue';

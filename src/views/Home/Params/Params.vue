@@ -5,13 +5,13 @@
     <template #l2> 参数列表 </template>
   </Breadcrumb>
 
-  <ElCard>
+  <el-card>
     <!-- alert -->
-    <ElAlert
+    <el-alert
       title="注意：只能为第三级分类设置相关参数！"
       type="warning"
       show-icon
-    ></ElAlert>
+    ></el-alert>
 
     <!-- pick category -->
     <PickCate
@@ -22,12 +22,18 @@
     ></PickCate>
 
     <!-- table -->
-    <ElTabs>
-      <ElTabPane label="动态参数">
-        <ElButton type="primary" plain size="small" @click="openAddForm"
-          >添加参数</ElButton
+    <el-tabs v-model="activeName" @tab-click="getAttribut">
+      <el-tab-pane label="动态参数" name="many">
+        <el-button type="primary" plain size="small" @click="openAddForm"
+          >添加参数</el-button
         >
-        <ParamsTable v-model:attributes="attributes" @addAttr="addAttribute" />
+        <ParamsTable
+          v-model:attributes="manyData"
+          @addAttr="addAttribute"
+          @editParam="openEdit"
+          @deleteParam="deleteParam"
+          @closeTag="closeTag"
+        />
         <ParamsForm
           title="添加动态参数"
           v-model:paramForm="paramForm"
@@ -36,16 +42,48 @@
           :loading="loading"
           @btnClick="addManyParam"
         />
-      </ElTabPane>
-      <ElTabPane label="静态属性">
-        <ElButton type="primary" plain size="small">添加属性</ElButton>
-      </ElTabPane>
-    </ElTabs>
-  </ElCard>
+        <ParamsForm
+          title="编辑动态参数"
+          v-model:paramForm="paramForm"
+          v-model:visible="editVisible"
+          :paramRule="paramRule"
+          :loading="loading"
+          @btnClick="editManyParam"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="静态属性" name="only">
+        <el-button type="primary" plain size="small" @click="openAddForm"
+          >添加属性</el-button
+        >
+        <ParamsTable
+          v-model:attributes="onlyData"
+          @addAttr="addAttribute"
+          @editParam="openEdit"
+          @deleteParam="deleteParam"
+          @closeTag="closeTag"
+        />
+        <ParamsForm
+          title="添加动态参数"
+          v-model:paramForm="paramForm"
+          v-model:visible="onlyVisible"
+          :paramRule="paramRule"
+          :loading="loading"
+          @btnClick="addManyParam"
+        />
+        <ParamsForm
+          title="编辑动态参数"
+          v-model:paramForm="paramForm"
+          v-model:visible="eidtOnlyVisible"
+          :paramRule="paramRule"
+          :loading="loading"
+          @btnClick="editManyParam"
+        />
+      </el-tab-pane>
+    </el-tabs>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
-import { ElCard, ElAlert, ElTabs, ElTabPane, ElButton } from 'element-plus';
 // 通用组件
 import Breadcrumb from '@/components/common/Breadcrumb.vue';
 // children
@@ -62,15 +100,28 @@ const {
   cascaderValue,
   cascaderOptions,
   cascaderProps,
-  attributes,
+  manyData,
+  onlyData,
   paramForm,
   paramRule,
   loading,
   visible,
+  onlyVisible,
+  editVisible,
+  eidtOnlyVisible,
+  activeName,
 } = toRefs(state);
 
 // modify
-const { getAttribut, addAttribute, addManyParam } = modifyParams(state);
+const {
+  getAttribut,
+  addAttribute,
+  addManyParam,
+  openEdit,
+  editManyParam,
+  deleteParam,
+  closeTag,
+} = modifyParams(state);
 </script>
 
 <style scoped lang="scss"></style>

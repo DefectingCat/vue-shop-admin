@@ -1,23 +1,27 @@
 <template>
-  <ElDialog title="添加分类" v-model="visible" width="35%" destroy-on-close>
+  <el-dialog title="添加分类" v-model="visible" width="35%" destroy-on-close>
     <!-- 主体区域 -->
-    <ElForm
+    <el-form
       ref="formRef"
       :model="addCateForm"
       label-width="100px"
       :rules="addCateRules"
     >
-      <ElFormItem
+      <el-form-item
         prop="cateName"
         label="分类名称"
         @keyup.enter="emit('btnClick')"
       >
-        <ElInput
+        <el-input
           v-model="addCateForm.cat_name"
           placeholder="分类名称"
-        ></ElInput>
-      </ElFormItem>
-      <ElFormItem prop="cascaderValue" label="父级分类" v-if="cascaderOptions">
+        ></el-input>
+      </el-form-item>
+      <el-form-item
+        prop="cascaderValue"
+        label="父级分类"
+        v-if="cascaderOptions"
+      >
         <el-cascader
           v-model="cascaderValue"
           :options="cascaderOptions"
@@ -25,8 +29,8 @@
           clearable
           @change="emit('cateChange')"
         ></el-cascader>
-      </ElFormItem>
-    </ElForm>
+      </el-form-item>
+    </el-form>
     <!-- footer -->
     <template #footer>
       <span class="dialog-footer">
@@ -38,19 +42,11 @@
         />
       </span>
     </template>
-  </ElDialog>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { ref, defineProps, defineEmit, useContext } from 'vue';
-import {
-  ElInput,
-  ElButton,
-  ElDialog,
-  ElForm,
-  ElFormItem,
-  ElCascader,
-} from 'element-plus';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
 import type { State } from '@/views/Home/Category/CategoryLogic';

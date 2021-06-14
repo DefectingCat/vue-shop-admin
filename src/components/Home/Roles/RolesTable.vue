@@ -1,9 +1,9 @@
 <template>
   <!-- Table -->
-  <ElTable :data="rolesList" row-key="id">
-    <ElTableColumn type="expand">
+  <el-table :data="rolesList" row-key="id">
+    <el-table-column type="expand">
       <template #default="scope">
-        <ElRow
+        <el-row
           v-for="(item, i1) of scope.row.children"
           :key="item.id"
           :class="[
@@ -12,14 +12,14 @@
             i1 === 0 ? 'roles-tag--top' : '',
           ]"
         >
-          <ElCol :span="5">
+          <el-col :span="5">
             <!-- 一级权限 -->
-            <ElTag closable @close="emit('handleClose', scope.row, item.id)">
+            <el-tag closable @close="emit('handleClose', scope.row, item.id)">
               {{ item.authName }}
-            </ElTag>
-          </ElCol>
-          <ElCol :span="19">
-            <ElRow
+            </el-tag>
+          </el-col>
+          <el-col :span="19">
+            <el-row
               v-for="(item2, i2) of item.children"
               :key="item2.id"
               :class="[
@@ -27,20 +27,20 @@
                 i2 === item.children.length - 1 ? '' : 'roles-tag--bot',
               ]"
             >
-              <ElCol :span="6">
+              <el-col :span="6">
                 <!-- 二级权限 -->
-                <ElTag
+                <el-tag
                   type="success"
                   closable
                   @close="emit('handleClose', scope.row, item2.id)"
                 >
                   {{ item2.authName }}
-                </ElTag>
-              </ElCol>
+                </el-tag>
+              </el-col>
 
-              <ElCol :span="18">
+              <el-col :span="18">
                 <!-- 三级权限 -->
-                <ElTag
+                <el-tag
                   type="warning"
                   v-for="item3 of item2.children"
                   :key="item3.id"
@@ -48,17 +48,25 @@
                   @close="emit('handleClose', scope.row, item3.id)"
                 >
                   {{ item3.authName }}
-                </ElTag>
-              </ElCol>
-            </ElRow>
-          </ElCol>
-        </ElRow>
+                </el-tag>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
       </template>
-    </ElTableColumn>
-    <ElTableColumn type="index"></ElTableColumn>
-    <ElTableColumn label="角色名称" prop="roleName" width="350"></ElTableColumn>
-    <ElTableColumn label="角色描述" prop="roleDesc" width="600"></ElTableColumn>
-    <ElTableColumn label="操作">
+    </el-table-column>
+    <el-table-column type="index"></el-table-column>
+    <el-table-column
+      label="角色名称"
+      prop="roleName"
+      width="350"
+    ></el-table-column>
+    <el-table-column
+      label="角色描述"
+      prop="roleDesc"
+      width="600"
+    ></el-table-column>
+    <el-table-column label="操作">
       <template #default="scope">
         <!-- <ElTooltip effect="light" content="编辑角色" placement="top"> -->
         <el-button
@@ -86,20 +94,12 @@
         ></el-button>
         <!-- </ElTooltip> -->
       </template>
-    </ElTableColumn>
-  </ElTable>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import {
-  ElTable,
-  ElTableColumn,
-  ElTag,
-  ElRow,
-  ElCol,
-  ElButton,
-} from 'element-plus';
 import type { State } from '@/views/Home/Roles/rolesLogic';
 
 defineProps<{

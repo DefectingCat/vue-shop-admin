@@ -1,23 +1,29 @@
 <template>
-  <ElDialog :title="title" v-model="visible" width="30%" destroy-on-close>
-    <ElForm
+  <el-dialog :title="title" v-model="visible" width="30%" destroy-on-close>
+    <el-form
       :model="rolesForm"
       :rules="rulesRules"
       ref="formRef"
       label-width="80px"
     >
-      <ElFormItem label="角色名称" prop="roleName">
-        <ElInput v-model="rolesForm.roleName" placeholder="角色名称"></ElInput>
-      </ElFormItem>
-      <ElFormItem label="角色描述" prop="roleDesc">
-        <ElInput v-model="rolesForm.roleDesc" placeholder="角色描述"></ElInput>
-      </ElFormItem>
-    </ElForm>
+      <el-form-item label="角色名称" prop="roleName">
+        <el-input
+          v-model="rolesForm.roleName"
+          placeholder="角色名称"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="角色描述" prop="roleDesc">
+        <el-input
+          v-model="rolesForm.roleDesc"
+          placeholder="角色描述"
+        ></el-input>
+      </el-form-item>
+    </el-form>
 
     <!-- footer -->
     <template #footer>
       <span class="dialog-footer">
-        <ElButton @click="visible = false">取消</ElButton>
+        <el-button @click="visible = false">取消</el-button>
         <LoadingBtn
           msg="确定"
           :loading="loading"
@@ -25,11 +31,10 @@
         />
       </span>
     </template>
-  </ElDialog>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ElForm, ElFormItem, ElDialog, ElInput, ElButton } from 'element-plus';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
 import type { State } from '@/views/Home/Roles/rolesLogic';

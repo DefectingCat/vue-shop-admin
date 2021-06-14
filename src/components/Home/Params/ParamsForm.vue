@@ -1,20 +1,20 @@
 <template>
-  <ElDialog :title="title" v-model="visible" width="30%" destroy-on-close>
-    <ElForm
+  <el-dialog :title="title" v-model="visible" width="30%" destroy-on-close>
+    <el-form
       :model="paramForm"
       ref="formRef"
       :rules="paramRule"
       label-width="80px"
     >
-      <ElFormItem label="参数名称" prop="paramName">
-        <ElInput v-model="paramForm.paramName"></ElInput>
-      </ElFormItem>
-    </ElForm>
+      <el-form-item label="参数名称" prop="paramName">
+        <el-input v-model="paramForm.paramName"></el-input>
+      </el-form-item>
+    </el-form>
 
     <!-- footer -->
     <template #footer>
       <span class="dialog-footer">
-        <ElButton @click="visible = false">取消</ElButton>
+        <el-button @click="visible = false">取消</el-button>
         <LoadingBtn
           msg="确定"
           :loading="loading"
@@ -22,11 +22,10 @@
         />
       </span>
     </template>
-  </ElDialog>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ElForm, ElFormItem, ElDialog, ElInput, ElButton } from 'element-plus';
 // 登录加载按钮
 import LoadingBtn from '@/components/common/LoadingBtn.vue';
 import type { State } from '@/views/Home/Params/ParamsLogic';
