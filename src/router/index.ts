@@ -22,72 +22,62 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '首页',
     },
+    component: () =>
+      import(/* webpackChunkName: "Home" */ '@/layouts/Home.vue'),
     children: [
       {
         path: '/welcome',
         name: 'Welcome',
         component: () =>
           import(
-            /* webpackChunkName: "Welcome" */ '@/components/Home/HomeWelcome.vue'
+            /* webpackChunkName: "Welcome" */ '@/components/HomeWelcome.vue'
           ),
       },
       {
         path: '/users',
         name: 'Users',
         component: () =>
-          import(/* webpackChunkName: "User" */ '@/views/Home/User/User.vue'),
+          import(/* webpackChunkName: "User" */ '@/views/User/User.vue'),
       },
       {
         path: '/rights',
         name: 'Rights',
         component: () =>
-          import(
-            /* webpackChunkName: "Rights" */ '@/views/Home/Rights/Rights.vue'
-          ),
+          import(/* webpackChunkName: "Rights" */ '@/views/Rights/Rights.vue'),
       },
       {
         path: '/roles',
         name: 'Roles',
         component: () =>
-          import(
-            /* webpackChunkName: "Roles" */ '@/views/Home/Roles/Roles.vue'
-          ),
+          import(/* webpackChunkName: "Roles" */ '@/views/Roles/Roles.vue'),
       },
       {
         path: '/goods',
         name: 'Goods',
         component: () =>
-          import(
-            /* webpackChunkName: "Goods" */ '@/views/Home/Goods/Goods.vue'
-          ),
+          import(/* webpackChunkName: "Goods" */ '@/views/Goods/Goods.vue'),
       },
       {
         path: '/goods/add',
         name: 'AddGood',
         component: () =>
-          import(
-            /* webpackChunkName: "AddGood" */ '@/views/Home/Goods/AddGood.vue'
-          ),
+          import(/* webpackChunkName: "AddGood" */ '@/views/Goods/AddGood.vue'),
       },
       {
         path: '/params',
         name: 'Params',
         component: () =>
-          import(
-            /* webpackChunkName: "Params" */ '@/views/Home/Params/Params.vue'
-          ),
+          import(/* webpackChunkName: "Params" */ '@/views/Params/Params.vue'),
       },
       {
         path: '/categories',
         name: 'Category',
         component: () =>
           import(
-            /* webpackChunkName: "Category" */ '@/views/Home/Category/Category.vue'
+            /* webpackChunkName: "Category" */ '@/views/Category/Category.vue'
           ),
       },
     ],
-    component: () =>
-      import(/* webpackChunkName: "Home" */ '@/views/Home/Home.vue'),
   },
 ];
 

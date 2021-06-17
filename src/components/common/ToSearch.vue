@@ -28,7 +28,7 @@
 
 <script lang="ts" setup>
 import { defineEmit, defineProps } from '@vue/runtime-core';
-import type { State } from '@/views/Home/User/UserLogic';
+import type { State } from '@/views/User/UserLogic';
 import { useVModels } from '@vueuse/core';
 
 const props =
