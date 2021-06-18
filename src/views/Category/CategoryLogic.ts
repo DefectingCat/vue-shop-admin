@@ -2,7 +2,7 @@ import { reactive } from 'vue-demi';
 import categoryRequest from './CategoryRequest';
 import { toLoadingRequest } from '@/hook/network/request';
 
-type CateRes = {
+export type CateRes = {
   cat_id: number;
   cat_name: string;
   cat_pid: number;

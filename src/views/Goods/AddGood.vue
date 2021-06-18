@@ -11,7 +11,7 @@
     <el-alert title="添加商品" type="info" center show-icon :closable="false">
     </el-alert>
 
-    <el-steps :active="1" simple>
+    <el-steps :active="activeIndex" simple>
       <el-step
         v-for="item in addGoodSteps"
         :key="item.id"
@@ -20,41 +20,44 @@
       ></el-step>
     </el-steps>
 
-    <el-tabs tab-position="left" style="height: 200px">
-      <el-tab-pane
-        v-for="item in addGoodSteps"
-        :key="item.id"
-        :label="item.title"
-      >
-        {{ item.title }}
-      </el-tab-pane>
-    </el-tabs>
+    <AddGoodsForm
+      v-model:tabsIndex="tabsIndex"
+      v-model:addForm="addForm"
+      :addFormRules="addFormRules"
+      ref="addFormRef"
+      :cateList="cateList"
+      :cateProps="cateProps"
+      @cascadChange="cascadChange"
+      @tabClick="tabClick"
+      v-model:manyTableData="manyTableData"
+      v-model:onlyTableData="onlyTableData"
+    />
   </el-card>
 </template>
 
 <script lang="ts" setup>
-// common components
+// logical
 import { toRefs } from '@vueuse/core';
-import {} from 'element-plus';
-import { reactive } from 'vue';
-export type State = {
-  addGoodSteps: {
-    id: number;
-    title: string;
-  }[];
-};
+import addGoodlogic from './AddGoodLogic';
+// Children
+import AddGoodsForm from '@/components/Goods/AddGoodsForm.vue';
 
-const state: State = reactive({
-  // 添加商品步骤
-  addGoodSteps: [
-    { id: 0, title: '基本信息' },
-    { id: 1, title: '商品参数' },
-    { id: 2, title: '商品属性' },
-    { id: 3, title: '商品图片' },
-    { id: 4, title: '商品内容' },
-  ],
-});
-const { addGoodSteps } = toRefs(state);
+const { state, tabsIndex, cascadChange, tabClick } = addGoodlogic();
+const {
+  activeIndex,
+  addGoodSteps,
+  addForm,
+  addFormRules,
+  addFormRef,
+  cateList,
+  cateProps,
+  manyTableData,
+  onlyTableData,
+} = toRefs(state);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-steps {
+  margin-top: 10px;
+}
+</style>

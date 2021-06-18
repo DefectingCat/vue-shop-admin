@@ -1,15 +1,7 @@
 import { reactive } from 'vue-demi';
 import { ElMessage } from 'element-plus';
 import paramsRequest from './paramsRequest';
-
-export type CateRes = {
-  cat_id: number;
-  cat_name: string;
-  cat_pid: number;
-  cat_level: number;
-  cat_deleted: boolean;
-  children: CateRes[];
-};
+import type { CateRes } from '@/views/Category/CategoryLogic';
 
 export type attr = {
   attr_id: number;

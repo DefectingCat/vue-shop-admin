@@ -32,6 +32,8 @@ import {
   ElTag,
   ElTree,
   ElCascader,
+  ElCheckbox,
+  ElCheckboxGroup,
 } from 'element-plus';
 import 'element-plus/packages/theme-chalk/src/base.scss';
 // element-plus
@@ -75,6 +77,8 @@ const components = [
   ElTag,
   ElTree,
   ElCascader,
+  ElCheckbox,
+  ElCheckboxGroup,
 ];
 
 export default components;
