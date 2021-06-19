@@ -31,6 +31,9 @@
       @tabClick="tabClick"
       v-model:manyTableData="manyTableData"
       v-model:onlyTableData="onlyTableData"
+      :uploadURL="uploadURL"
+      :uploadHeader="uploadHeader"
+      @addGoods="addGoods"
     />
   </el-card>
 </template>
@@ -42,17 +45,19 @@ import addGoodlogic from './AddGoodLogic';
 // Children
 import AddGoodsForm from '@/components/Goods/AddGoodsForm.vue';
 
-const { state, tabsIndex, cascadChange, tabClick } = addGoodlogic();
+const { state, tabsIndex, addFormRef, cascadChange, tabClick, addGoods } =
+  addGoodlogic();
 const {
   activeIndex,
   addGoodSteps,
   addForm,
   addFormRules,
-  addFormRef,
   cateList,
   cateProps,
   manyTableData,
   onlyTableData,
+  uploadURL,
+  uploadHeader,
 } = toRefs(state);
 </script>
 

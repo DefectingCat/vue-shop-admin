@@ -1,15 +1,23 @@
-import { computed, WritableComputedRef } from 'vue';
+import { computed, Ref, ref, WritableComputedRef } from 'vue';
 import { reactive } from 'vue-demi';
 import { CheckPhone, checkNumber } from '@/hook/common/formValidate';
 import type { CateRes } from '@/views/Category/CategoryLogic';
-
 import addGoodsRequest from './addGoodsRequest';
+import { ElForm, ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 type addGoodlogic = {
   state: State;
   tabsIndex: WritableComputedRef<string>;
+  addFormRef: Ref<
+    | {
+        addFormRef: InstanceType<typeof ElForm>;
+      }
+    | undefined
+  >;
   cascadChange: () => void;
   tabClick: () => void;
+  addGoods: () => Promise<void>;
 };
 
 type attr = {
@@ -30,17 +38,11 @@ type addForm = {
   goods_weight: number;
   goods_introduce: string;
   goods_cate: number[];
-  pics: [{ pic: string }];
-  attrs: [
-    {
-      attr_id: number;
-      attr_value: string;
-    },
-    {
-      attr_id: number;
-      attr_value: string;
-    }
-  ];
+  pics: { pic: string }[];
+  attrs: {
+    attr_id: number;
+    attr_value: string;
+  }[];
 };
 
 export type State = {
@@ -63,10 +65,10 @@ export type State = {
     goods_number: [
       { required: true; validator: CheckPhone; trigger: 'change' }
     ];
-    goods_cat: [{ required: true; message: '请选择商品分类'; trigger: 'blur' }];
+    goods_cate: [
+      { required: true; message: '请选择商品分类'; trigger: 'change' }
+    ];
   };
-  // 添加商品表单的 ref
-  addFormRef: unknown;
   cateList: CateRes[];
   cateProps: {
     expandTrigger: 'hover';
@@ -76,6 +78,10 @@ export type State = {
   };
   manyTableData: attr[];
   onlyTableData: attr[];
+  uploadURL: string;
+  uploadHeader: {
+    Authorization: string | null;
+  };
 };
 
 const addGoodlogic = (): addGoodlogic => {
@@ -100,17 +106,8 @@ const addGoodlogic = (): addGoodlogic => {
       goods_introduce: '',
       // 商品分类数组
       goods_cate: [],
-      pics: [{ pic: '' }],
-      attrs: [
-        {
-          attr_id: 0,
-          attr_value: '',
-        },
-        {
-          attr_id: 0,
-          attr_value: '',
-        },
-      ],
+      pics: [],
+      attrs: [],
     },
     // 添加商品的表单验证
     addFormRules: {
@@ -126,12 +123,10 @@ const addGoodlogic = (): addGoodlogic => {
       goods_number: [
         { required: true, validator: checkNumber, trigger: 'change' },
       ],
-      goods_cat: [
-        { required: true, message: '请选择商品分类', trigger: 'blur' },
+      goods_cate: [
+        { required: true, message: '请选择商品分类', trigger: 'change' },
       ],
     },
-    // 添加商品表单的 ref
-    addFormRef: null,
     // 分类列表
     cateList: [],
     // cascader 配置
@@ -145,7 +140,19 @@ const addGoodlogic = (): addGoodlogic => {
     manyTableData: [],
     // 获取的商品属性
     onlyTableData: [],
+    // 上传图片地址
+    uploadURL: 'https://api.defectink.com/shop-admin/api/private/v1/upload',
+    // 上传图片的请求头
+    uploadHeader: {
+      Authorization: window.sessionStorage.getItem('token'),
+    },
   });
+
+  // 添加商品表单的 ref
+  const addFormRef =
+    ref<{
+      addFormRef: InstanceType<typeof ElForm>;
+    }>();
 
   // 类型转换 tabs v-model 只接收 string
   const tabsIndex = computed<string>({
@@ -164,7 +171,7 @@ const addGoodlogic = (): addGoodlogic => {
   };
 
   // request
-  const { toGetGoodsCate, toGetAttr } = addGoodsRequest(state);
+  const { toGetGoodsCate, toGetAttr, toAddGoods } = addGoodsRequest(state);
   toGetGoodsCate();
 
   // 点击 tabs 回调
@@ -197,11 +204,47 @@ const addGoodlogic = (): addGoodlogic => {
     }
   };
 
+  // 编程路由
+  const router = useRouter();
+
+  // 提交表单
+  const addGoods = async () => {
+    addFormRef.value?.addFormRef.validate((valid) => {
+      if (!valid) {
+        ElMessage.warning('请先选择完成表单');
+        return;
+      }
+    });
+    // 后端需要分类为逗号分隔
+    state.addForm.goods_cat = state.addForm.goods_cate.join(',');
+    // 为后端处理 attr
+    state.manyTableData.map((item) => {
+      const newInfo = {
+        attr_id: item.attr_id,
+        attr_value: item.attrVals.join(','),
+      };
+      state.addForm.attrs.push(newInfo);
+    });
+    state.onlyTableData.map((item) => {
+      const newInfo = {
+        attr_id: item.attr_id,
+        attr_value: item.attrVals.join(','),
+      };
+      state.addForm.attrs.push(newInfo);
+    });
+    // 发送请求
+    const result = await toAddGoods();
+    if (result.meta.msg === '创建商品成功') ElMessage.success('创建商品成功');
+    router.push('/goods');
+  };
+
   return {
     state,
     tabsIndex,
+    addFormRef,
     cascadChange,
     tabClick,
+    addGoods,
   };
 };
 

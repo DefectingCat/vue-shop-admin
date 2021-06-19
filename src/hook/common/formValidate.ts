@@ -27,5 +27,5 @@ export const checkEmail: CheckPhone = (rule, value, callback) => {
 };
 
 export const checkNumber: CheckPhone = (rule, value, callback) => {
-  Number(value) >= 0 ? callback() : callback(new Error('请输入正确的价格'));
+  Number(value) > 0 ? callback() : callback(new Error('请输入正确的价格'));
 };
