@@ -41,6 +41,11 @@ body,
   overflow-x: hidden;
 }
 
+// 修复商品列表搜索框权重可能不对
+.el-input__icon {
+  line-height: 40px !important;
+}
+
 /* 滚动槽 */
 ::-webkit-scrollbar {
   width: 8px;

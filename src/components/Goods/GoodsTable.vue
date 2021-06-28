@@ -18,12 +18,21 @@
       width="180"
     ></el-table-column>
     <el-table-column label="操作" width="180">
-      <template #default>
+      <template #default="{ row }">
         <!-- <ElTooltip effect="light" content="编辑商品" placement="top"> -->
-        <el-button size="mini" icon="el-icon-edit"></el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-edit"
+          @click="emit('editGood', row)"
+        ></el-button>
         <!-- </ElTooltip> -->
         <!-- <ElTooltip effect="light" content="删除商品" placement="top"> -->
-        <el-button size="mini" icon="el-icon-delete" type="danger"></el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-delete"
+          type="danger"
+          @click="emit('deleteGoods', row.goods_id)"
+        ></el-button>
         <!-- </ElTooltip> -->
       </template>
     </el-table-column>
@@ -31,12 +40,14 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue-demi';
+import { defineEmit, defineProps } from 'vue-demi';
 import type { State } from '@/views/Goods/GoodsLogic';
 
 defineProps<{
   goodsList: State['goodsList'];
 }>();
+
+const emit = defineEmit(['editGood', 'deleteGoods']);
 </script>
 
 <style scoped lang="scss"></style>

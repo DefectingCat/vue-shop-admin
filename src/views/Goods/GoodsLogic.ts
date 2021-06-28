@@ -2,14 +2,14 @@ import { reactive } from 'vue-demi';
 import goodsRequest from './GoodsRequest';
 import { toLoadingRequest } from '@/hook/network/request';
 
-type goods = {
+export type goods = {
   goods_id: number;
   goods_name: string;
   goods_price: number;
   goods_number: number;
   goods_weight: number;
   goods_state: number;
-  add_time: number;
+  add_time: string;
   upd_time: number;
   hot_mumber: number;
   is_promote: boolean;
@@ -23,6 +23,16 @@ export type State = {
   };
   goodsList: goods[];
   goodsTotal: number;
+  dialogVisible: boolean;
+  editForm: {
+    goods_name: string;
+  };
+  editFormRules: {
+    goods_name: [
+      { required: true; message: '请输入商品名称'; trigger: 'blur' }
+    ];
+  };
+  rowId: number;
 };
 
 type goodsLogic = {
@@ -41,6 +51,20 @@ const goodsLogic = (): goodsLogic => {
     goodsList: [],
     // 商品总数
     goodsTotal: 0,
+    // 编辑窗口可见状态
+    dialogVisible: false,
+    // 编辑商品表格
+    editForm: {
+      goods_name: '',
+    },
+    // 编辑商品表单验证
+    editFormRules: {
+      goods_name: [
+        { required: true, message: '请输入商品名称', trigger: 'blur' },
+      ],
+    },
+    // 当前操作行的 id
+    rowId: 0,
   });
 
   // 第一次发送请求

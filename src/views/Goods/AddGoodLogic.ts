@@ -3,15 +3,16 @@ import { reactive } from 'vue-demi';
 import { CheckPhone, checkNumber } from '@/hook/common/formValidate';
 import type { CateRes } from '@/views/Category/CategoryLogic';
 import addGoodsRequest from './addGoodsRequest';
-import { ElForm, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
+import type { formRef } from '@/types/formRules';
 
 type addGoodlogic = {
   state: State;
   tabsIndex: WritableComputedRef<string>;
   addFormRef: Ref<
     | {
-        addFormRef: InstanceType<typeof ElForm>;
+        addFormRef: formRef;
       }
     | undefined
   >;
@@ -151,7 +152,7 @@ const addGoodlogic = (): addGoodlogic => {
   // 添加商品表单的 ref
   const addFormRef =
     ref<{
-      addFormRef: InstanceType<typeof ElForm>;
+      addFormRef: formRef;
     }>();
 
   // 类型转换 tabs v-model 只接收 string
