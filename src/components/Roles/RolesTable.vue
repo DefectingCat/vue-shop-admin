@@ -1,6 +1,6 @@
 <template>
   <!-- Table -->
-  <el-table :data="rolesList" row-key="id">
+  <el-table :data="rolesList" row-key="id" :tree-props="{ children: 'none' }">
     <el-table-column type="expand">
       <template #default="scope">
         <el-row
@@ -55,7 +55,7 @@
         </el-row>
       </template>
     </el-table-column>
-    <el-table-column type="index"></el-table-column>
+
     <el-table-column
       label="角色名称"
       prop="roleName"
