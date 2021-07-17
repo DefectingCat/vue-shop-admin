@@ -18,7 +18,7 @@
         </template>
       </el-input>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="4" v-if="!!btnMsg">
       <el-button type="primary" plain @click="emit('toAdd')">
         {{ btnMsg }}
       </el-button>
@@ -35,7 +35,7 @@ const props =
   defineProps<{
     queryInfo: State['queryInfo'];
     placeholder: string;
-    btnMsg: string;
+    btnMsg?: string;
   }>();
 
 const emit = defineEmit(['update:queryInfo', 'toSearch', 'toAdd']);
