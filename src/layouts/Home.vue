@@ -44,7 +44,7 @@ getMenuList();
 .home-body {
   background-color: #edf1f7;
   border-radius: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .el-header {
   background-color: #fff;
